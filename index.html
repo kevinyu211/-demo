@@ -6,254 +6,374 @@
   <title>学霸助手</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .card-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+    
+    .glow {
+      box-shadow: 0 0 60px rgba(99, 102, 241, 0.3);
+    }
+    
+    .btn-glow:hover {
+      box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+    }
+    
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .nav-blur {
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(12px);
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); }
+      50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
+    }
+    
+    .pulse-glow {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+  </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-slate-950 text-white min-h-screen">
   
   <!-- Navigation -->
-  <nav class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-4">
+  <nav class="nav-blur fixed top-0 left-0 right-0 z-50 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex justify-between items-center h-16">
-        <a href="index.html" class="flex items-center space-x-2">
-          <i class="fas fa-graduation-cap text-2xl"></i>
+        <a href="index.html" class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+            <i class="fas fa-graduation-cap text-lg"></i>
+          </div>
           <span class="font-bold text-xl">学霸助手</span>
         </a>
-        <div class="hidden md:flex space-x-1">
-          <a href="index.html" class="nav-link active">
-            <i class="fas fa-home"></i> 首页
-          </a>
-          <a href="create.html" class="nav-link">
-            <i class="fas fa-plus-circle"></i> 创建题目
-          </a>
-          <a href="bank.html" class="nav-link">
-            <i class="fas fa-database"></i> 题库
-          </a>
-          <a href="practice.html" class="nav-link">
-            <i class="fas fa-book-reader"></i> 刷题
-          </a>
-          <a href="exam.html" class="nav-link">
-            <i class="fas fa-clock"></i> 考试
-          </a>
-          <a href="wrong.html" class="nav-link">
-            <i class="fas fa-times-circle"></i> 错题本
-          </a>
+        <div class="hidden md:flex items-center space-x-1">
+          <a href="index.html" class="px-4 py-2 rounded-lg text-white bg-white/10 text-sm font-medium">首页</a>
+          <a href="create.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">创建题目</a>
+          <a href="bank.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">题库</a>
+          <a href="practice.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">刷题</a>
+          <a href="exam.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">考试</a>
+          <a href="wrong.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">错题本</a>
         </div>
-        <button id="mobileMenuBtn" class="md:hidden p-2">
+        <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-white/10">
           <i class="fas fa-bars text-xl"></i>
         </button>
       </div>
     </div>
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="hidden md:hidden bg-blue-700 pb-4">
-      <a href="index.html" class="block px-4 py-2 hover:bg-blue-600">首页</a>
-      <a href="create.html" class="block px-4 py-2 hover:bg-blue-600">创建题目</a>
-      <a href="bank.html" class="block px-4 py-2 hover:bg-blue-600">题库</a>
-      <a href="practice.html" class="block px-4 py-2 hover:bg-blue-600">刷题</a>
-      <a href="exam.html" class="block px-4 py-2 hover:bg-blue-600">考试</a>
-      <a href="wrong.html" class="block px-4 py-2 hover:bg-blue-600">错题本</a>
+    <div id="mobileMenu" class="hidden md:hidden border-t border-white/10 pb-4">
+      <a href="index.html" class="block px-4 py-3 text-white bg-white/5">首页</a>
+      <a href="create.html" class="block px-4 py-3 text-slate-300 hover:bg-white/5">创建题目</a>
+      <a href="bank.html" class="block px-4 py-3 text-slate-300 hover:bg-white/5">题库</a>
+      <a href="practice.html" class="block px-4 py-3 text-slate-300 hover:bg-white/5">刷题</a>
+      <a href="exam.html" class="block px-4 py-3 text-slate-300 hover:bg-white/5">考试</a>
+      <a href="wrong.html" class="block px-4 py-3 text-slate-300 hover:bg-white/5">错题本</a>
     </div>
   </nav>
 
   <!-- Hero Section -->
-  <section class="gradient-hero text-white py-20 px-4">
-    <div class="max-w-4xl mx-auto text-center relative z-10">
-      <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-sm mb-6">
+  <section class="gradient-bg pt-32 pb-24 px-4 relative overflow-hidden">
+    <!-- Background decoration -->
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl"></div>
+      <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+    </div>
+    
+    <div class="max-w-5xl mx-auto text-center relative z-10">
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm mb-8">
         <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-        <span>AI 驱动的智能学习平台</span>
+        <span class="text-slate-300">AI 驱动的智能学习平台</span>
       </div>
-      <h1 class="text-4xl md:text-6xl font-bold mb-6 tracking-tight">学霸助手</h1>
-      <p class="text-xl md:text-2xl text-blue-100 mb-10 max-w-2xl mx-auto leading-relaxed">基于真题生成相似练习 · 智能错题管理 · 高效备考</p>
-      <div class="flex flex-wrap justify-center gap-4">
-        <a href="create.html" class="btn-primary text-base px-8 py-3">
-          <i class="fas fa-magic mr-2"></i>开始创建题目
-        </a>
-        <a href="practice.html" class="btn-secondary bg-white/10 border-white/20 text-white hover:bg-white/20 text-base px-8 py-3">
-          <i class="fas fa-play mr-2"></i>立即刷题
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Stats Dashboard -->
-  <section class="max-w-6xl mx-auto px-4 -mt-10 relative z-20">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="stat-card">
-        <div class="stat-value text-blue-600" id="statBanks">0</div>
-        <div class="stat-label">题库数量</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value text-emerald-600" id="statQuestions">0</div>
-        <div class="stat-label">题目总数</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value text-violet-600" id="statPracticed">0</div>
-        <div class="stat-label">已练习</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value text-amber-600" id="statWrong">0</div>
-        <div class="stat-label">待复习错题</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Quick Actions -->
-  <section class="max-w-6xl mx-auto px-4 py-16">
-    <h2 class="text-2xl font-bold text-gray-800 mb-2">快速开始</h2>
-    <p class="text-gray-500 mb-8">选择一个功能开始使用</p>
-    <div class="grid md:grid-cols-3 gap-6">
       
-      <!-- Create Questions -->
-      <a href="create.html" class="feature-card group">
-        <div class="feature-icon bg-blue-100 text-blue-600">
-          <i class="fas fa-plus-circle"></i>
-        </div>
-        <h3 class="text-lg font-semibold mb-2">创建题目</h3>
-        <p class="text-gray-500 text-sm mb-4">手动添加或使用 AI 生成相似题目</p>
-        <span class="text-blue-600 text-sm font-medium group-hover:underline">
-          开始创建 <i class="fas fa-arrow-right ml-1"></i>
-        </span>
-      </a>
+      <!-- Title -->
+      <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
+        <span class="gradient-text">学霸助手</span>
+      </h1>
       
-      <!-- Generate Similar -->
-      <a href="create.html#similar" class="feature-card group">
-        <div class="feature-icon bg-violet-100 text-violet-600">
+      <!-- Subtitle -->
+      <p class="text-xl md:text-2xl text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+        基于真题生成相似练习 · 智能错题管理 · 高效备考
+      </p>
+      
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="create.html" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl font-semibold text-lg btn-glow transition-all hover:scale-105">
           <i class="fas fa-wand-magic-sparkles"></i>
-        </div>
-        <h3 class="text-lg font-semibold mb-2">AI 相似题生成</h3>
-        <p class="text-gray-500 text-sm mb-4">输入真题，AI 生成同类型练习题</p>
-        <span class="text-violet-600 text-sm font-medium group-hover:underline">
-          立即体验 <i class="fas fa-arrow-right ml-1"></i>
-        </span>
-      </a>
-      
-      <!-- Practice -->
-      <a href="practice.html" class="feature-card group">
-        <div class="feature-icon bg-emerald-100 text-emerald-600">
-          <i class="fas fa-book-reader"></i>
-        </div>
-        <h3 class="text-lg font-semibold mb-2">刷题模式</h3>
-        <p class="text-gray-500 text-sm mb-4">自由练习，错题自动收集</p>
-        <span class="text-emerald-600 text-sm font-medium group-hover:underline">
-          开始刷题 <i class="fas fa-arrow-right ml-1"></i>
-        </span>
-      </a>
-      
-      <!-- Exam -->
-      <a href="exam.html" class="feature-card group">
-        <div class="feature-icon bg-amber-100 text-amber-600">
-          <i class="fas fa-clock"></i>
-        </div>
-        <h3 class="text-lg font-semibold mb-2">模拟考试</h3>
-        <p class="text-gray-500 text-sm mb-4">计时测试，模拟真实考试环境</p>
-        <span class="text-amber-600 text-sm font-medium group-hover:underline">
-          进入考试 <i class="fas fa-arrow-right ml-1"></i>
-        </span>
-      </a>
-      
-      <!-- Wrong Book -->
-      <a href="wrong.html" class="feature-card group">
-        <div class="feature-icon bg-rose-100 text-rose-600">
-          <i class="fas fa-rotate"></i>
-        </div>
-        <h3 class="text-lg font-semibold mb-2">错题本</h3>
-        <p class="text-gray-500 text-sm mb-4">复习错题，攻克薄弱环节</p>
-        <span class="text-rose-600 text-sm font-medium group-hover:underline">
-          查看错题 <i class="fas fa-arrow-right ml-1"></i>
-        </span>
-      </a>
-      
-      <!-- Banks -->
-      <a href="bank.html" class="feature-card group">
-        <div class="feature-icon bg-sky-100 text-sky-600">
-          <i class="fas fa-layer-group"></i>
-        </div>
-        <h3 class="text-lg font-semibold mb-2">题库管理</h3>
-        <p class="text-gray-500 text-sm mb-4">整理、导入导出你的题库</p>
-        <span class="text-sky-600 text-sm font-medium group-hover:underline">
-          管理题库 <i class="fas fa-arrow-right ml-1"></i>
-        </span>
-      </a>
-      
+          开始创建题目
+        </a>
+        <a href="practice.html" class="inline-flex items-center justify-center gap-2 px-8 py-4 glass rounded-xl font-semibold text-lg hover:bg-white/10 transition-all">
+          <i class="fas fa-play"></i>
+          立即刷题
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- Features -->
-  <section class="bg-gradient-to-b from-white to-gray-50 py-20 px-4">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-12">
-        <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-3">为什么选择学霸助手？</h2>
-        <p class="text-gray-500 max-w-2xl mx-auto">四大核心功能，助你高效备考</p>
+  <!-- Stats Section -->
+  <section class="py-8 px-4 -mt-12 relative z-20">
+    <div class="max-w-5xl mx-auto">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="glass rounded-2xl p-6 text-center glow">
+          <div class="text-4xl font-bold text-indigo-400 mb-1" id="statBanks">0</div>
+          <div class="text-slate-400 text-sm">题库数量</div>
+        </div>
+        <div class="glass rounded-2xl p-6 text-center">
+          <div class="text-4xl font-bold text-emerald-400 mb-1" id="statQuestions">0</div>
+          <div class="text-slate-400 text-sm">题目总数</div>
+        </div>
+        <div class="glass rounded-2xl p-6 text-center">
+          <div class="text-4xl font-bold text-violet-400 mb-1" id="statPracticed">0</div>
+          <div class="text-slate-400 text-sm">已练习</div>
+        </div>
+        <div class="glass rounded-2xl p-6 text-center">
+          <div class="text-4xl font-bold text-amber-400 mb-1" id="statWrong">0</div>
+          <div class="text-slate-400 text-sm">待复习错题</div>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-24 px-4">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">核心功能</h2>
+        <p class="text-slate-400 text-lg">选择一个功能开始使用</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- AI Similar Questions -->
+        <a href="create.html#similar" class="group relative glass rounded-2xl p-8 card-hover overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-violet-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <i class="fas fa-wand-magic-sparkles text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">AI 相似题生成</h3>
+            <p class="text-slate-400 mb-4">输入一道真题，AI 自动分析并生成多道同类型练习题</p>
+            <span class="inline-flex items-center text-violet-400 font-medium group-hover:gap-3 transition-all">
+              立即体验 <i class="fas fa-arrow-right ml-2"></i>
+            </span>
+          </div>
+        </a>
+        
+        <!-- Create Questions -->
+        <a href="create.html" class="group relative glass rounded-2xl p-8 card-hover overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <i class="fas fa-plus text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">创建题目</h3>
+            <p class="text-slate-400 mb-4">可视化表单添加题目，支持选择题、填空题、判断题</p>
+            <span class="inline-flex items-center text-blue-400 font-medium group-hover:gap-3 transition-all">
+              开始创建 <i class="fas fa-arrow-right ml-2"></i>
+            </span>
+          </div>
+        </a>
+        
+        <!-- Practice -->
+        <a href="practice.html" class="group relative glass rounded-2xl p-8 card-hover overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-emerald-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <i class="fas fa-book-open text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">刷题模式</h3>
+            <p class="text-slate-400 mb-4">自由练习，查看解析，错题自动收集到错题本</p>
+            <span class="inline-flex items-center text-emerald-400 font-medium group-hover:gap-3 transition-all">
+              开始刷题 <i class="fas fa-arrow-right ml-2"></i>
+            </span>
+          </div>
+        </a>
+        
+        <!-- Exam -->
+        <a href="exam.html" class="group relative glass rounded-2xl p-8 card-hover overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-amber-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <i class="fas fa-clock text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">模拟考试</h3>
+            <p class="text-slate-400 mb-4">计时测试，自动评分，模拟真实考试环境</p>
+            <span class="inline-flex items-center text-amber-400 font-medium group-hover:gap-3 transition-all">
+              进入考试 <i class="fas fa-arrow-right ml-2"></i>
+            </span>
+          </div>
+        </a>
+        
+        <!-- Wrong Book -->
+        <a href="wrong.html" class="group relative glass rounded-2xl p-8 card-hover overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-rose-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <i class="fas fa-rotate text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">错题本</h3>
+            <p class="text-slate-400 mb-4">自动收集错题，针对性复习，标记已掌握</p>
+            <span class="inline-flex items-center text-rose-400 font-medium group-hover:gap-3 transition-all">
+              查看错题 <i class="fas fa-arrow-right ml-2"></i>
+            </span>
+          </div>
+        </a>
+        
+        <!-- Banks -->
+        <a href="bank.html" class="group relative glass rounded-2xl p-8 card-hover overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-sky-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <i class="fas fa-layer-group text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">题库管理</h3>
+            <p class="text-slate-400 mb-4">创建、编辑、导入导出题库，组织你的学习资源</p>
+            <span class="inline-flex items-center text-sky-400 font-medium group-hover:gap-3 transition-all">
+              管理题库 <i class="fas fa-arrow-right ml-2"></i>
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Section -->
+  <section class="py-24 px-4 border-t border-white/10">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">为什么选择学霸助手？</h2>
+        <p class="text-slate-400 text-lg">四大核心优势，助你高效备考</p>
+      </div>
+      
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
         <div class="text-center group">
-          <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-500/25 group-hover:scale-110 transition-transform">
-            <i class="fas fa-wand-magic-sparkles text-2xl text-white"></i>
+          <div class="w-20 h-20 rounded-3xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mx-auto mb-6 shadow-lg shadow-indigo-500/30 group-hover:shadow-indigo-500/50 group-hover:scale-110 transition-all float-animation">
+            <i class="fas fa-brain text-3xl"></i>
           </div>
-          <h3 class="font-semibold mb-2">AI 相似题生成</h3>
-          <p class="text-gray-500 text-sm">输入一道真题，生成多道同类型练习</p>
+          <h3 class="text-lg font-semibold mb-2">AI 智能生成</h3>
+          <p class="text-slate-400 text-sm">基于真题分析，智能生成相似练习题</p>
         </div>
+        
         <div class="text-center group">
-          <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-emerald-500/25 group-hover:scale-110 transition-transform">
-            <i class="fas fa-edit text-2xl text-white"></i>
+          <div class="w-20 h-20 rounded-3xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center mx-auto mb-6 shadow-lg shadow-emerald-500/30 group-hover:shadow-emerald-500/50 group-hover:scale-110 transition-all float-animation" style="animation-delay: 0.5s">
+            <i class="fas fa-pen-to-square text-3xl"></i>
           </div>
-          <h3 class="font-semibold mb-2">可视化编辑</h3>
-          <p class="text-gray-500 text-sm">无需 JSON，表单式添加题目</p>
+          <h3 class="text-lg font-semibold mb-2">可视化编辑</h3>
+          <p class="text-slate-400 text-sm">无需 JSON，表单式添加和编辑题目</p>
         </div>
+        
         <div class="text-center group">
-          <div class="w-16 h-16 bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-rose-500/25 group-hover:scale-110 transition-transform">
-            <i class="fas fa-book-open text-2xl text-white"></i>
+          <div class="w-20 h-20 rounded-3xl bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center mx-auto mb-6 shadow-lg shadow-rose-500/30 group-hover:shadow-rose-500/50 group-hover:scale-110 transition-all float-animation" style="animation-delay: 1s">
+            <i class="fas fa-bullseye text-3xl"></i>
           </div>
-          <h3 class="font-semibold mb-2">智能错题本</h3>
-          <p class="text-gray-500 text-sm">自动收集错题，针对性复习</p>
+          <h3 class="text-lg font-semibold mb-2">错题攻克</h3>
+          <p class="text-slate-400 text-sm">自动收集错题，针对性复习薄弱环节</p>
         </div>
+        
         <div class="text-center group">
-          <div class="w-16 h-16 bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-violet-500/25 group-hover:scale-110 transition-transform">
-            <i class="fas fa-chart-line text-2xl text-white"></i>
+          <div class="w-20 h-20 rounded-3xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center mx-auto mb-6 shadow-lg shadow-amber-500/30 group-hover:shadow-amber-500/50 group-hover:scale-110 transition-all float-animation" style="animation-delay: 1.5s">
+            <i class="fas fa-chart-line text-3xl"></i>
           </div>
-          <h3 class="font-semibold mb-2">学习统计</h3>
-          <p class="text-gray-500 text-sm">追踪进度，了解薄弱环节</p>
+          <h3 class="text-lg font-semibold mb-2">学习追踪</h3>
+          <p class="text-slate-400 text-sm">追踪学习进度，了解学习效果</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Recent Banks -->
-  <section class="max-w-6xl mx-auto px-4 py-12">
-    <div class="flex justify-between items-center mb-6">
-      <h2 class="text-2xl font-bold text-gray-800">我的题库</h2>
-      <a href="bank.html" class="text-blue-600 hover:text-blue-800">
-        查看全部 <i class="fas fa-arrow-right ml-1"></i>
-      </a>
-    </div>
-    <div id="recentBanks" class="grid md:grid-cols-3 gap-4">
-      <!-- Filled by JS -->
-    </div>
-    <div id="noBanks" class="hidden card text-center py-12">
-      <i class="fas fa-folder-open text-4xl text-gray-300 mb-4"></i>
-      <p class="text-gray-500 mb-4">还没有题库</p>
-      <a href="create.html" class="btn-primary inline-block">
-        <i class="fas fa-plus mr-2"></i>创建第一个题库
-      </a>
+  <!-- Recent Banks Section -->
+  <section class="py-24 px-4 border-t border-white/10">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex justify-between items-center mb-10">
+        <div>
+          <h2 class="text-2xl font-bold mb-2">我的题库</h2>
+          <p class="text-slate-400">管理你的学习资源</p>
+        </div>
+        <a href="bank.html" class="text-indigo-400 hover:text-indigo-300 font-medium transition">
+          查看全部 <i class="fas fa-arrow-right ml-1"></i>
+        </a>
+      </div>
+      
+      <div id="recentBanks" class="grid md:grid-cols-3 gap-6">
+        <!-- Filled by JS -->
+      </div>
+      
+      <div id="noBanks" class="hidden glass rounded-2xl p-12 text-center">
+        <div class="w-20 h-20 rounded-full bg-slate-800 flex items-center justify-center mx-auto mb-6">
+          <i class="fas fa-folder-open text-3xl text-slate-600"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">还没有题库</h3>
+        <p class="text-slate-400 mb-6">创建你的第一个题库，开始学习之旅</p>
+        <a href="create.html" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl font-medium btn-glow transition-all hover:scale-105">
+          <i class="fas fa-plus"></i>
+          创建题库
+        </a>
+      </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="bg-gray-900 text-gray-400 py-12 px-4">
+  <footer class="border-t border-white/10 py-12 px-4">
     <div class="max-w-6xl mx-auto">
-      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-        <div class="flex items-center gap-2">
-          <i class="fas fa-graduation-cap text-xl text-white"></i>
-          <span class="text-white font-semibold">学霸助手</span>
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <span class="font-semibold text-lg">学霸助手</span>
         </div>
-        <p class="text-sm">让学习更简单，让备考更高效</p>
-        <div class="flex gap-4 text-sm">
-          <a href="https://github.com/kevinyu211/-demo" target="_blank" class="hover:text-white transition">
-            <i class="fab fa-github mr-1"></i>GitHub
-          </a>
-        </div>
+        <p class="text-slate-400 text-sm">让学习更简单，让备考更高效</p>
+        <a href="https://github.com/kevinyu211/-demo" target="_blank" class="text-slate-400 hover:text-white transition">
+          <i class="fab fa-github text-2xl"></i>
+        </a>
       </div>
-      <div class="border-t border-gray-800 mt-8 pt-6 text-center text-sm">
-        <p>© 2026 学霸助手. Demo Version.</p>
+      <div class="mt-8 pt-8 border-t border-white/10 text-center">
+        <p class="text-slate-500 text-sm">© 2026 学霸助手. Demo Version.</p>
       </div>
     </div>
   </footer>
@@ -261,6 +381,11 @@
   <script src="js/storage.js"></script>
   <script src="js/app.js"></script>
   <script>
+    // Mobile menu toggle
+    document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+      document.getElementById('mobileMenu').classList.toggle('hidden');
+    });
+
     // Load dashboard stats
     function loadDashboard() {
       const banks = Storage.getBanks();
@@ -287,23 +412,33 @@
         
         const recent = bankList.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0)).slice(0, 3);
         recentBanksEl.innerHTML = recent.map(bank => `
-          <div class="card">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="font-semibold">${escapeHtml(bank.name)}</h3>
-              <span class="text-sm text-gray-500">${bank.questions?.length || 0} 题</span>
+          <div class="glass rounded-2xl p-6 card-hover">
+            <div class="flex justify-between items-start mb-4">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center">
+                <i class="fas fa-book text-indigo-400"></i>
+              </div>
+              <span class="text-slate-400 text-sm">${bank.questions?.length || 0} 题</span>
             </div>
-            <p class="text-sm text-gray-500 mb-4">${bank.description || '暂无描述'}</p>
-            <div class="flex gap-2">
-              <a href="practice.html?bank=${bank.id}" class="text-sm text-blue-600 hover:text-blue-800">
+            <h3 class="font-semibold text-lg mb-2">${escapeHtml(bank.name)}</h3>
+            <p class="text-slate-400 text-sm mb-4 line-clamp-2">${bank.description || '暂无描述'}</p>
+            <div class="flex gap-3">
+              <a href="practice.html?bank=${bank.id}" class="flex-1 text-center py-2 rounded-lg bg-indigo-500/20 text-indigo-400 text-sm font-medium hover:bg-indigo-500/30 transition">
                 <i class="fas fa-play mr-1"></i>练习
               </a>
-              <a href="bank.html?id=${bank.id}" class="text-sm text-gray-600 hover:text-gray-800">
+              <a href="bank.html?id=${bank.id}" class="flex-1 text-center py-2 rounded-lg bg-white/5 text-slate-300 text-sm font-medium hover:bg-white/10 transition">
                 <i class="fas fa-eye mr-1"></i>查看
               </a>
             </div>
           </div>
         `).join('');
       }
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
     }
 
     loadDashboard();
