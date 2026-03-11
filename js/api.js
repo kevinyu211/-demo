@@ -69,7 +69,7 @@ const API = {
           },
           { role: 'user', content: prompt }
         ],
-        temperature: 0.7,
+        temperature: 1,
         max_tokens: 4000
       })
     });
@@ -145,7 +145,7 @@ ${example}
           },
           { role: 'user', content: prompt }
         ],
-        temperature: 0.7,
+        temperature: 1,
         max_tokens: 4000
       })
     });
@@ -208,7 +208,7 @@ ${testContent}
           },
           { role: 'user', content: prompt }
         ],
-        temperature: 0.3,
+        temperature: 1,
         max_tokens: 4000
       })
     });
@@ -277,7 +277,7 @@ ${questionsText}
           },
           { role: 'user', content: prompt }
         ],
-        temperature: 0.7,
+        temperature: 1,
         max_tokens: 4000
       })
     });
