@@ -48,7 +48,7 @@ npx serve
 1. 进入「创建题目」页面
 2. 切换到「AI 相似题生成」标签
 3. 粘贴一道真题或例题
-4. 输入 DeepSeek API Key（从 https://platform.deepseek.com 获取）
+4. 输入 DeepSeek API Key（从 https://platform.moonshot.cn 获取）
 5. 点击「生成相似题目」
 6. 编辑生成的题目（可选）
 7. 保存到题库
@@ -101,7 +101,7 @@ quesbank-demo/
 
 AI 相似题生成功能需要 DeepSeek API Key:
 
-1. 访问 [DeepSeek Platform](https://platform.deepseek.com)
+1. 访问 [DeepSeek Platform](https://platform.moonshot.cn)
 2. 注册/登录账号
 3. 创建 API Key
 4. 在应用中输入 API Key

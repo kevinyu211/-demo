@@ -214,7 +214,7 @@ A. 上海  B. 北京  C. 广州  D. 深圳"></textarea>
             </select>
           </div>
           <div class="col-span-2">
-            <label class="label">API Key (DeepSeek)</label>
+            <label class="label">API Key (Kimi)</label>
             <div class="relative">
               <input type="password" id="apiKey" class="input pr-10" placeholder="sk-...">
               <button type="button" onclick="toggleApiKey()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
@@ -490,7 +490,7 @@ A. 上海  B. 北京  C. 广州  D. 深圳"></textarea>
       }
 
       // Save API key for convenience
-      localStorage.setItem('deepseek_api_key', apiKey);
+      localStorage.setItem('kimi_api_key', apiKey);
 
       // Show loading
       document.getElementById('generating').classList.remove('hidden');
@@ -634,7 +634,7 @@ A. 上海  B. 北京  C. 广州  D. 深圳"></textarea>
     }
 
     // Load saved API key
-    const savedApiKey = localStorage.getItem('deepseek_api_key');
+    const savedApiKey = localStorage.getItem('kimi_api_key');
     if (savedApiKey) {
       document.getElementById('apiKey').value = savedApiKey;
     }

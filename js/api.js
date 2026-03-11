@@ -1,14 +1,24 @@
 /**
- * API Module - DeepSeek API integration for AI question generation
+ * API Module - Kimi (Moonshot) API integration for AI question generation
+ * 
+ * Kimi API Documentation: https://platform.moonshot.cn/docs
+ * API Base URL: https://api.moonshot.cn/v1
+ * Models: moonshot-v1-8k, moonshot-v1-32k, moonshot-v1-128k
  */
 
 const API = {
+  // API Configuration
+  config: {
+    baseUrl: 'https://api.moonshot.cn/v1',
+    model: 'moonshot-v1-8k', // Default model, can use 32k or 128k for longer context
+  },
+
   /**
    * Generate similar questions based on an example
    * @param {string} example - The example question
    * @param {number} count - Number of questions to generate
    * @param {string} difficulty - Target difficulty (same/easy/medium/hard)
-   * @param {string} apiKey - DeepSeek API key
+   * @param {string} apiKey - Kimi (Moonshot) API key
    * @returns {Promise<Object>} Generated questions and analysis
    */
   async generateSimilarQuestions(example, count, difficulty, apiKey) {
@@ -52,15 +62,24 @@ ${example}
 3. 如果是填空题，answer应为填空的内容
 4. 确保生成的题目有变化，不要简单复制`;
 
-    const response = await fetch('https://api.deepseek.com/chat/completions', {
+    const response = await fetch(`${this.config.baseUrl}/chat/completions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
-        messages: [{ role: 'user', content: prompt }],
+        model: this.config.model,
+        messages: [
+          {
+            role: 'system',
+            content: '你是一位专业的教育出题专家，擅长分析题目结构并生成高质量的相似练习题。请始终以JSON格式返回结果。'
+          },
+          { 
+            role: 'user', 
+            content: prompt 
+          }
+        ],
         temperature: 0.7,
         max_tokens: 4000
       })
@@ -95,7 +114,7 @@ ${example}
    * Generate questions from a topic/prompt
    * @param {string} topic - The topic to generate questions about
    * @param {Object} counts - Number of each question type {choice, blank, truefalse}
-   * @param {string} apiKey - DeepSeek API key
+   * @param {string} apiKey - Kimi (Moonshot) API key
    * @returns {Promise<Object>} Generated questions
    */
   async generateFromTopic(topic, counts, apiKey) {
@@ -135,15 +154,24 @@ ${example}
   ]
 }`;
 
-    const response = await fetch('https://api.deepseek.com/chat/completions', {
+    const response = await fetch(`${this.config.baseUrl}/chat/completions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
-        messages: [{ role: 'user', content: prompt }],
+        model: this.config.model,
+        messages: [
+          {
+            role: 'system',
+            content: '你是一位专业的教育出题专家，擅长根据知识点生成高质量的练习题。请始终以JSON格式返回结果。'
+          },
+          { 
+            role: 'user', 
+            content: prompt 
+          }
+        ],
         temperature: 0.7,
         max_tokens: 4000
       })
@@ -171,5 +199,13 @@ ${example}
     } catch (e) {
       throw new Error('JSON 解析失败：' + e.message);
     }
+  },
+
+  /**
+   * Set the model to use
+   * @param {string} model - Model name (moonshot-v1-8k, moonshot-v1-32k, moonshot-v1-128k)
+   */
+  setModel(model) {
+    this.config.model = model;
   }
 };
