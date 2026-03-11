@@ -1,4 +1,4 @@
-# 智能题库 Pro - Product Requirements Document (PRD)
+# 学霸助手 - Product Requirements Document (PRD)
 
 **Version:** 1.0 Demo  
 **Date:** March 2026  
@@ -8,7 +8,7 @@
 
 ## 1. Executive Summary
 
-智能题库 Pro is an intelligent question bank platform designed for the Chinese education market. It targets teachers, students, and educational agencies who need efficient ways to create, manage, and practice exam-style questions.
+学霸助手 is an intelligent question bank platform designed for the Chinese education market. It targets teachers, students, and educational agencies who need efficient ways to create, manage, and practice exam-style questions.
 
 This document outlines the competitive analysis of existing solutions, our differentiation strategy, and the demo MVP scope.
 
@@ -97,7 +97,7 @@ QuesBank (https://github.com/Weeexiao/QuesBank) is an open-source question bank 
 
 ---
 
-## 3. Our Solution: 智能题库 Pro
+## 3. Our Solution: 学霸助手
 
 ### 3.1 Vision
 
@@ -111,7 +111,7 @@ We're not building a JSON parser with an AI wrapper. We're building a platform t
 
 ### 3.2 Key Differentiators
 
-| Feature | QuesBank | 智能题库 Pro |
+| Feature | QuesBank | 学霸助手 |
 |---------|----------|--------------|
 | Question Input | JSON only | Visual form + Word + AI |
 | Similar Questions | ❌ None | ✅ Generate from examples |
@@ -436,7 +436,7 @@ Options: Mark Mastered | Generate Similar | Practice Again
 | QuesBank | Free, open source | Poor UX, no smart features |
 | 猿题库 | Large question DB | Expensive, no customization |
 | 作业帮 | Brand recognition | Generic, not teacher-focused |
-| 智能题库 Pro | Smart generation, clean UX | New, unproven |
+| 学霸助手 | Smart generation, clean UX | New, unproven |
 
 ---
 

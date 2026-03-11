@@ -235,7 +235,7 @@ window.DEBUG = {
   }
 };
 
-console.log('🎓 智能题库 Pro - Debug commands available:');
+console.log('🎓 学霸助手 - Debug commands available:');
 console.log('  DEBUG.clearAll() - Clear all data');
 console.log('  DEBUG.exportData() - Export all data');
 console.log('  DEBUG.showStats() - Show current stats');
