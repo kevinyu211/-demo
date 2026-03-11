@@ -6,187 +6,181 @@
   <title>错题本 - 学霸助手</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } }
+  </script>
+  <style>
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+    .nav-blur { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); }
+  </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-slate-950 text-white min-h-screen">
   
   <!-- Navigation -->
-  <nav class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-4">
+  <nav class="nav-blur fixed top-0 left-0 right-0 z-50 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex justify-between items-center h-16">
-        <a href="index.html" class="flex items-center space-x-2">
-          <i class="fas fa-graduation-cap text-2xl"></i>
+        <a href="index.html" class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+            <i class="fas fa-graduation-cap text-lg"></i>
+          </div>
           <span class="font-bold text-xl">学霸助手</span>
         </a>
-        <div class="hidden md:flex space-x-1">
-          <a href="index.html" class="nav-link"><i class="fas fa-home"></i> 首页</a>
-          <a href="create.html" class="nav-link"><i class="fas fa-plus-circle"></i> 创建题目</a>
-          <a href="bank.html" class="nav-link"><i class="fas fa-database"></i> 题库</a>
-          <a href="practice.html" class="nav-link"><i class="fas fa-book-reader"></i> 刷题</a>
-          <a href="exam.html" class="nav-link"><i class="fas fa-clock"></i> 考试</a>
-          <a href="wrong.html" class="nav-link active"><i class="fas fa-times-circle"></i> 错题本</a>
+        <div class="hidden md:flex items-center space-x-1">
+          <a href="index.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">首页</a>
+          <a href="practice.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">刷题</a>
+          <a href="wrong.html" class="px-4 py-2 rounded-lg bg-white/10 text-sm font-medium">错题本</a>
+          <a href="bank.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">题库</a>
         </div>
-        <button id="mobileMenuBtn" class="md:hidden p-2">
-          <i class="fas fa-bars text-xl"></i>
-        </button>
       </div>
-    </div>
-    <div id="mobileMenu" class="hidden md:hidden bg-blue-700 pb-4">
-      <a href="index.html" class="block px-4 py-2 hover:bg-blue-600">首页</a>
-      <a href="create.html" class="block px-4 py-2 hover:bg-blue-600">创建题目</a>
-      <a href="bank.html" class="block px-4 py-2 hover:bg-blue-600">题库</a>
-      <a href="practice.html" class="block px-4 py-2 hover:bg-blue-600">刷题</a>
-      <a href="exam.html" class="block px-4 py-2 hover:bg-blue-600">考试</a>
-      <a href="wrong.html" class="block px-4 py-2 hover:bg-blue-600">错题本</a>
     </div>
   </nav>
 
-  <!-- Header -->
-  <header class="bg-gradient-to-r from-red-500 to-pink-600 text-white py-8 px-4">
-    <div class="max-w-6xl mx-auto">
-      <h1 class="text-3xl font-bold mb-2">错题本</h1>
-      <p class="text-red-100">复习错题，攻克薄弱环节</p>
-    </div>
-  </header>
-
-  <!-- Stats -->
-  <section class="max-w-6xl mx-auto px-4 -mt-6">
-    <div class="grid grid-cols-3 gap-4">
-      <div class="card text-center">
-        <div class="text-2xl font-bold text-red-600" id="statTotal">0</div>
-        <div class="text-gray-500 text-sm">总错题</div>
-      </div>
-      <div class="card text-center">
-        <div class="text-2xl font-bold text-orange-600" id="statPending">0</div>
-        <div class="text-gray-500 text-sm">待复习</div>
-      </div>
-      <div class="card text-center">
-        <div class="text-2xl font-bold text-green-600" id="statMastered">0</div>
-        <div class="text-gray-500 text-sm">已掌握</div>
-      </div>
-    </div>
-  </section>
-
-  <main class="max-w-6xl mx-auto px-4 py-8">
+  <main class="pt-24 pb-12 px-4 max-w-4xl mx-auto">
     
-    <!-- Filters -->
-    <div class="flex flex-wrap gap-4 mb-6">
-      <div class="flex gap-2">
-        <button onclick="filterWrong('all')" class="filter-btn active" data-filter="all">全部</button>
-        <button onclick="filterWrong('pending')" class="filter-btn" data-filter="pending">待复习</button>
-        <button onclick="filterWrong('mastered')" class="filter-btn" data-filter="mastered">已掌握</button>
-      </div>
-      <div class="flex-1"></div>
-      <button onclick="practiceWrong()" class="btn-primary text-sm" id="practiceWrongBtn">
-        <i class="fas fa-play mr-2"></i>练习错题
-      </button>
-      <button onclick="clearMastered()" class="btn-secondary text-sm">
-        <i class="fas fa-trash mr-2"></i>清除已掌握
-      </button>
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold mb-2">
+        <span class="bg-gradient-to-r from-rose-400 to-pink-500 bg-clip-text text-transparent">错题本</span>
+      </h1>
+      <p class="text-slate-400">复习错题，攻克薄弱环节</p>
     </div>
 
-    <!-- Wrong Answers List -->
+    <!-- Stats -->
+    <div class="grid grid-cols-3 gap-4 mb-8">
+      <div class="glass rounded-2xl p-4 text-center">
+        <div class="text-2xl font-bold text-rose-400" id="statTotal">0</div>
+        <div class="text-slate-400 text-sm">总错题</div>
+      </div>
+      <div class="glass rounded-2xl p-4 text-center">
+        <div class="text-2xl font-bold text-amber-400" id="statPending">0</div>
+        <div class="text-slate-400 text-sm">待复习</div>
+      </div>
+      <div class="glass rounded-2xl p-4 text-center">
+        <div class="text-2xl font-bold text-emerald-400" id="statMastered">0</div>
+        <div class="text-slate-400 text-sm">已掌握</div>
+      </div>
+    </div>
+
+    <!-- Filters & Actions -->
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+      <div class="flex gap-2">
+        <button onclick="filterWrong('all')" class="filter-btn px-4 py-2 rounded-lg text-sm font-medium bg-white/10" data-filter="all">全部</button>
+        <button onclick="filterWrong('pending')" class="filter-btn px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:bg-white/5" data-filter="pending">待复习</button>
+        <button onclick="filterWrong('mastered')" class="filter-btn px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:bg-white/5" data-filter="mastered">已掌握</button>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="practiceWrong()" id="practiceWrongBtn" class="px-4 py-2 rounded-lg bg-gradient-to-r from-rose-500 to-pink-600 text-sm font-medium hover:opacity-90 transition">
+          <i class="fas fa-play mr-2"></i>练习错题
+        </button>
+        <button onclick="generateFromWrong()" id="generateBtn" class="px-4 py-2 rounded-lg border border-slate-700 text-sm font-medium text-slate-300 hover:bg-white/5 transition">
+          <i class="fas fa-wand-magic-sparkles mr-2"></i>AI 强化
+        </button>
+      </div>
+    </div>
+
+    <!-- Wrong List -->
     <div id="wrongList" class="space-y-4">
       <!-- Filled by JS -->
     </div>
 
     <!-- Empty State -->
-    <div id="emptyState" class="hidden card text-center py-16">
-      <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-        <i class="fas fa-check text-4xl text-green-600"></i>
+    <div id="emptyState" class="hidden glass rounded-2xl p-12 text-center">
+      <div class="w-20 h-20 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-6">
+        <i class="fas fa-check text-4xl text-emerald-400"></i>
       </div>
-      <h2 class="text-xl font-bold mb-2">太棒了！</h2>
-      <p class="text-gray-500 mb-4">你还没有错题，继续保持！</p>
-      <a href="practice.html" class="btn-primary inline-block">
-        <i class="fas fa-book-reader mr-2"></i>去刷题
+      <h3 class="text-xl font-semibold mb-2">太棒了！</h3>
+      <p class="text-slate-400 mb-6">你还没有错题，继续保持！</p>
+      <a href="index.html" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl font-medium hover:opacity-90 transition">
+        <i class="fas fa-play"></i>去刷题
       </a>
     </div>
 
-    <!-- Practice Wrong Modal -->
+    <!-- Practice Wrong View -->
     <div id="practiceWrongView" class="hidden">
-      
-      <!-- Progress -->
-      <div class="card mb-4">
-        <div class="flex justify-between items-center mb-2">
-          <span class="text-sm text-gray-600">复习进度</span>
-          <span class="text-sm font-medium"><span id="wrongCurrentIndex">1</span> / <span id="wrongTotalCount">0</span></span>
+      <div class="glass rounded-2xl p-4 mb-6">
+        <div class="flex justify-between items-center mb-3">
+          <span class="text-slate-400 text-sm">复习进度</span>
+          <span class="font-medium"><span id="wrongCurrentIndex">1</span> / <span id="wrongTotalCount">0</span></span>
         </div>
-        <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div id="wrongProgressBar" class="h-full bg-red-500 transition-all duration-300" style="width: 0%"></div>
+        <div class="h-2 bg-slate-800 rounded-full overflow-hidden">
+          <div id="wrongProgressBar" class="h-full bg-gradient-to-r from-rose-500 to-pink-600 transition-all" style="width: 0%"></div>
         </div>
       </div>
 
-      <!-- Question Card -->
-      <div class="card mb-4">
+      <div class="glass rounded-2xl p-6 mb-6">
         <div class="flex justify-between items-start mb-4">
-          <span class="text-xs px-2 py-1 rounded bg-red-100 text-red-800">错题复习</span>
-          <span class="text-sm text-gray-400">#<span id="wrongQuestionNumber">1</span></span>
+          <span class="px-3 py-1 rounded-full text-xs font-medium bg-rose-500/20 text-rose-300">错题复习</span>
+          <span class="text-slate-500 text-sm">#<span id="wrongQuestionNumber">1</span></span>
         </div>
         
-        <p id="wrongQuestionText" class="text-lg mb-4"></p>
-        <p class="text-sm text-gray-500 mb-4">
-          <i class="fas fa-exclamation-triangle text-orange-500 mr-1"></i>
-          上次错误答案：<span id="wrongLastAnswer" class="text-red-600"></span>
+        <p id="wrongQuestionText" class="text-xl mb-4 leading-relaxed"></p>
+        <p class="text-sm text-slate-500 mb-4">
+          <i class="fas fa-exclamation-triangle text-amber-500 mr-1"></i>
+          上次错误答案：<span id="wrongLastAnswer" class="text-rose-400"></span>
         </p>
 
-        <!-- Choice Options -->
-        <div id="wrongChoiceOptions" class="space-y-2 mb-4">
-          <!-- Filled by JS -->
-        </div>
-
-        <!-- Text Input -->
+        <div id="wrongChoiceOptions" class="space-y-3 mb-4"></div>
         <div id="wrongTextInput" class="hidden mb-4">
-          <input type="text" id="wrongAnswerInput" class="input" placeholder="输入你的答案...">
+          <input type="text" id="wrongAnswerInput" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500" placeholder="输入答案...">
         </div>
-
-        <!-- True/False Buttons -->
-        <div id="wrongTfButtons" class="hidden flex gap-4 mb-4">
-          <button onclick="selectWrongTF('正确')" class="tf-btn flex-1" data-value="正确">
-            <i class="fas fa-check mr-2"></i>正确
+        <div id="wrongTfButtons" class="hidden grid grid-cols-2 gap-4 mb-4">
+          <button onclick="selectWrongTF('正确')" class="py-4 rounded-xl border border-slate-700 font-medium hover:border-emerald-500 hover:bg-emerald-500/10 transition" data-value="正确">
+            <i class="fas fa-check mr-2 text-emerald-400"></i>正确
           </button>
-          <button onclick="selectWrongTF('错误')" class="tf-btn flex-1" data-value="错误">
-            <i class="fas fa-times mr-2"></i>错误
+          <button onclick="selectWrongTF('错误')" class="py-4 rounded-xl border border-slate-700 font-medium hover:border-rose-500 hover:bg-rose-500/10 transition" data-value="错误">
+            <i class="fas fa-times mr-2 text-rose-400"></i>错误
           </button>
         </div>
 
-        <!-- Submit -->
-        <button id="wrongSubmitBtn" onclick="submitWrongAnswer()" class="btn-primary w-full">
-          <i class="fas fa-check mr-2"></i>确认答案
+        <button id="wrongSubmitBtn" onclick="submitWrongAnswer()" class="w-full py-4 rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 font-semibold hover:opacity-90 transition">
+          确认答案
         </button>
 
-        <!-- Result -->
         <div id="wrongResultSection" class="hidden mt-6">
-          <div id="wrongResultBanner" class="p-4 rounded-lg mb-4">
+          <div id="wrongResultBanner" class="p-4 rounded-xl mb-4">
             <div class="flex items-center">
-              <i id="wrongResultIcon" class="text-2xl mr-3"></i>
+              <i id="wrongResultIcon" class="text-3xl mr-4"></i>
               <div>
-                <div id="wrongResultText" class="font-semibold"></div>
-                <div id="wrongCorrectAnswer" class="text-sm"></div>
+                <div id="wrongResultText" class="font-semibold text-lg"></div>
+                <div id="wrongCorrectAnswer" class="text-sm opacity-80"></div>
               </div>
             </div>
           </div>
-          <div class="bg-gray-50 p-4 rounded-lg mb-4">
-            <div class="text-sm text-gray-500 mb-1">解析</div>
-            <p id="wrongExplanationText" class="text-gray-700"></p>
+          <div class="bg-slate-800/50 rounded-xl p-4 mb-4">
+            <div class="text-slate-400 text-sm mb-2">解析</div>
+            <p id="wrongExplanationText" class="text-slate-200"></p>
           </div>
-          <div class="flex gap-2">
-            <button onclick="markAsMastered()" class="btn-secondary flex-1">
-              <i class="fas fa-check-circle mr-1"></i>标记已掌握
+          <div class="flex gap-3">
+            <button onclick="markAsMastered()" class="flex-1 py-3 rounded-xl border border-emerald-500/50 text-emerald-400 font-medium hover:bg-emerald-500/10 transition">
+              <i class="fas fa-check-circle mr-2"></i>已掌握
             </button>
-            <button onclick="nextWrongQuestion()" class="btn-primary flex-1">
-              下一题<i class="fas fa-arrow-right ml-1"></i>
+            <button onclick="nextWrongQuestion()" class="flex-1 py-3 rounded-xl bg-purple-600 font-medium hover:bg-purple-700 transition">
+              下一题<i class="fas fa-arrow-right ml-2"></i>
             </button>
           </div>
         </div>
       </div>
 
-      <button onclick="exitWrongPractice()" class="btn-secondary w-full">
+      <button onclick="exitWrongPractice()" class="w-full py-3 rounded-xl border border-slate-700 font-medium hover:bg-slate-800 transition">
         <i class="fas fa-times mr-2"></i>退出复习
       </button>
     </div>
   </main>
 
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay" class="hidden fixed inset-0 bg-slate-950/90 backdrop-blur-sm z-50 flex items-center justify-center">
+    <div class="text-center">
+      <div class="w-16 h-16 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin mx-auto mb-6"></div>
+      <p class="text-xl font-medium mb-2">AI 正在分析错题...</p>
+      <p class="text-slate-400">生成针对性练习题</p>
+    </div>
+  </div>
+
   <script src="js/storage.js"></script>
+  <script src="js/api.js"></script>
   <script src="js/app.js"></script>
   <script>
     let wrongAnswers = [];
@@ -196,7 +190,6 @@
     let selectedWrongAnswer = '';
     let wrongAnswered = false;
 
-    // Load wrong answers
     function loadWrongAnswers() {
       wrongAnswers = Storage.getWrongAnswers();
       
@@ -207,83 +200,77 @@
       document.getElementById('statTotal').textContent = total;
       document.getElementById('statPending').textContent = pending;
       document.getElementById('statMastered').textContent = mastered;
-
       document.getElementById('practiceWrongBtn').disabled = pending === 0;
+      document.getElementById('generateBtn').disabled = pending === 0;
 
       filterWrong(currentFilter);
     }
 
-    // Filter wrong answers
     function filterWrong(filter) {
       currentFilter = filter;
-      
       document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.filter === filter);
+        btn.classList.toggle('bg-white/10', btn.dataset.filter === filter);
+        btn.classList.toggle('text-white', btn.dataset.filter === filter);
+        btn.classList.toggle('text-slate-400', btn.dataset.filter !== filter);
       });
 
       let filtered = wrongAnswers;
-      if (filter === 'pending') {
-        filtered = wrongAnswers.filter(w => !w.mastered);
-      } else if (filter === 'mastered') {
-        filtered = wrongAnswers.filter(w => w.mastered);
-      }
+      if (filter === 'pending') filtered = wrongAnswers.filter(w => !w.mastered);
+      else if (filter === 'mastered') filtered = wrongAnswers.filter(w => w.mastered);
 
       renderWrongList(filtered);
     }
 
-    // Render wrong answers list
     function renderWrongList(list) {
+      const wrongListEl = document.getElementById('wrongList');
+      const emptyStateEl = document.getElementById('emptyState');
+
       if (list.length === 0) {
-        document.getElementById('wrongList').classList.add('hidden');
-        document.getElementById('emptyState').classList.remove('hidden');
+        wrongListEl.classList.add('hidden');
+        emptyStateEl.classList.remove('hidden');
         return;
       }
 
-      document.getElementById('wrongList').classList.remove('hidden');
-      document.getElementById('emptyState').classList.add('hidden');
+      wrongListEl.classList.remove('hidden');
+      emptyStateEl.classList.add('hidden');
 
       const typeLabels = { choice: '选择题', blank: '填空题', truefalse: '判断题' };
 
-      document.getElementById('wrongList').innerHTML = list.map(item => {
+      wrongListEl.innerHTML = list.map(item => {
         const q = item.question;
         return `
-          <div class="card ${item.mastered ? 'opacity-60' : ''}">
+          <div class="glass rounded-2xl p-5 ${item.mastered ? 'opacity-50' : ''}">
             <div class="flex justify-between items-start mb-3">
               <div class="flex gap-2">
-                <span class="text-xs px-2 py-1 rounded bg-gray-100 text-gray-600">${typeLabels[q.type] || '未知'}</span>
-                ${item.mastered ? '<span class="text-xs px-2 py-1 rounded bg-green-100 text-green-800">已掌握</span>' : '<span class="text-xs px-2 py-1 rounded bg-red-100 text-red-800">待复习</span>'}
+                <span class="px-2 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-400">${typeLabels[q.type] || '未知'}</span>
+                ${item.mastered 
+                  ? '<span class="px-2 py-1 rounded-lg text-xs font-medium bg-emerald-500/20 text-emerald-400">已掌握</span>' 
+                  : '<span class="px-2 py-1 rounded-lg text-xs font-medium bg-rose-500/20 text-rose-400">待复习</span>'}
               </div>
               <div class="flex gap-2">
-                ${!item.mastered ? `<button onclick="markSingleMastered('${item.id}')" class="text-gray-400 hover:text-green-600 text-sm"><i class="fas fa-check-circle"></i></button>` : ''}
-                <button onclick="deleteWrongAnswer('${item.id}')" class="text-gray-400 hover:text-red-600 text-sm"><i class="fas fa-trash"></i></button>
+                ${!item.mastered ? `<button onclick="markSingleMastered('${item.id}')" class="text-slate-500 hover:text-emerald-400 transition"><i class="fas fa-check-circle"></i></button>` : ''}
+                <button onclick="deleteWrongAnswer('${item.id}')" class="text-slate-500 hover:text-rose-400 transition"><i class="fas fa-trash"></i></button>
               </div>
             </div>
-            <p class="text-gray-800 mb-2">${escapeHtml(q.question)}</p>
-            ${q.options ? `
-              <div class="grid grid-cols-2 gap-1 text-sm text-gray-600 mb-2">
-                ${q.options.map((opt, j) => `<div>${String.fromCharCode(65 + j)}. ${escapeHtml(opt)}</div>`).join('')}
-              </div>
-            ` : ''}
+            <p class="text-slate-200 mb-3">${escapeHtml(q.question)}</p>
             <div class="flex gap-4 text-sm">
-              <span class="text-red-600"><i class="fas fa-times mr-1"></i>你的答案：${item.userAnswer || '未作答'}</span>
-              <span class="text-green-600"><i class="fas fa-check mr-1"></i>正确答案：${q.answer}</span>
+              <span class="text-rose-400"><i class="fas fa-times mr-1"></i>你的答案：${item.userAnswer || '未作答'}</span>
+              <span class="text-emerald-400"><i class="fas fa-check mr-1"></i>正确答案：${q.answer}</span>
             </div>
-            <div class="text-xs text-gray-400 mt-2">
-              <i class="fas fa-clock mr-1"></i>添加于 ${new Date(item.addedAt).toLocaleString()}
-              ${item.reviewCount > 0 ? ` | 已复习 ${item.reviewCount} 次` : ''}
+            <div class="text-xs text-slate-500 mt-3">
+              <i class="fas fa-clock mr-1"></i>添加于 ${new Date(item.addedAt).toLocaleString('zh-CN')}
+              ${item.reviewCount > 0 ? ` · 已复习 ${item.reviewCount} 次` : ''}
             </div>
           </div>
         `;
       }).join('');
     }
 
-    // Mark single as mastered
     function markSingleMastered(id) {
       Storage.markWrongMastered(id);
       loadWrongAnswers();
     }
 
-    // Delete wrong answer
     function deleteWrongAnswer(id) {
       if (confirm('确定删除此错题？')) {
         Storage.deleteWrongAnswer(id);
@@ -291,41 +278,59 @@
       }
     }
 
-    // Clear mastered
-    function clearMastered() {
-      const mastered = wrongAnswers.filter(w => w.mastered);
-      if (mastered.length === 0) {
-        alert('没有已掌握的错题');
-        return;
+    async function generateFromWrong() {
+      const pending = wrongAnswers.filter(w => !w.mastered);
+      if (pending.length === 0) return;
+
+      document.getElementById('loadingOverlay').classList.remove('hidden');
+
+      try {
+        const questions = pending.slice(0, 5).map(w => w.question);
+        const result = await API.generateFromWrongAnswers(questions, 5);
+        
+        if (result.questions && result.questions.length > 0) {
+          const bank = {
+            id: 'wrong_practice_' + Date.now(),
+            name: '错题强化练习',
+            description: '基于错题生成的针对性练习',
+            questions: result.questions.map((q, i) => ({
+              id: 'wq_' + Date.now() + '_' + i,
+              ...q,
+              source: 'ai',
+              createdAt: Date.now()
+            })),
+            createdAt: Date.now(),
+            updatedAt: Date.now()
+          };
+
+          const banks = Storage.getBanks();
+          banks[bank.id] = bank;
+          localStorage.setItem('questionBanks', JSON.stringify(banks));
+
+          window.location.href = `practice.html?bank=${bank.id}&auto=true`;
+        }
+      } catch (error) {
+        alert('生成失败: ' + error.message);
       }
-      if (confirm(`确定清除 ${mastered.length} 道已掌握的错题？`)) {
-        mastered.forEach(w => Storage.deleteWrongAnswer(w.id));
-        loadWrongAnswers();
-      }
+
+      document.getElementById('loadingOverlay').classList.add('hidden');
     }
 
-    // Practice wrong answers
     function practiceWrong() {
       practiceWrongList = wrongAnswers.filter(w => !w.mastered);
-      
-      if (practiceWrongList.length === 0) {
-        alert('没有待复习的错题');
-        return;
-      }
+      if (practiceWrongList.length === 0) return;
 
       currentWrongIndex = 0;
-      
       document.getElementById('wrongList').classList.add('hidden');
       document.getElementById('emptyState').classList.add('hidden');
-      document.querySelector('.flex.flex-wrap.gap-4.mb-6').classList.add('hidden');
+      document.querySelector('.flex.flex-wrap.items-center').classList.add('hidden');
+      document.querySelector('.grid.grid-cols-3').classList.add('hidden');
       document.getElementById('practiceWrongView').classList.remove('hidden');
-
       document.getElementById('wrongTotalCount').textContent = practiceWrongList.length;
-      
+
       showWrongQuestion();
     }
 
-    // Show wrong question
     function showWrongQuestion() {
       const item = practiceWrongList[currentWrongIndex];
       const q = item.question;
@@ -335,11 +340,9 @@
       document.getElementById('wrongCurrentIndex').textContent = currentWrongIndex + 1;
       document.getElementById('wrongQuestionNumber').textContent = currentWrongIndex + 1;
       document.getElementById('wrongProgressBar').style.width = `${((currentWrongIndex + 1) / practiceWrongList.length) * 100}%`;
-      
       document.getElementById('wrongQuestionText').textContent = q.question;
       document.getElementById('wrongLastAnswer').textContent = item.userAnswer || '未作答';
 
-      // Show appropriate input
       const choiceOptions = document.getElementById('wrongChoiceOptions');
       const textInput = document.getElementById('wrongTextInput');
       const tfButtons = document.getElementById('wrongTfButtons');
@@ -350,11 +353,11 @@
 
       if (q.type === 'choice') {
         choiceOptions.classList.remove('hidden');
-        choiceOptions.innerHTML = q.options.map((opt, i) => `
+        choiceOptions.innerHTML = (q.options || []).map((opt, i) => `
           <button onclick="selectWrongOption('${String.fromCharCode(65 + i)}')" 
-            class="option-btn w-full text-left" data-value="${String.fromCharCode(65 + i)}">
-            <span class="option-label">${String.fromCharCode(65 + i)}</span>
-            <span>${escapeHtml(opt)}</span>
+            class="w-full text-left p-4 rounded-xl border border-slate-700 flex items-center gap-4 hover:border-purple-500 hover:bg-purple-500/10 transition" data-value="${String.fromCharCode(65 + i)}">
+            <span class="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center font-semibold">${String.fromCharCode(65 + i)}</span>
+            <span class="flex-1">${escapeHtml(opt)}</span>
           </button>
         `).join('');
       } else if (q.type === 'blank') {
@@ -362,31 +365,31 @@
         document.getElementById('wrongAnswerInput').value = '';
       } else if (q.type === 'truefalse') {
         tfButtons.classList.remove('hidden');
-        document.querySelectorAll('.tf-btn').forEach(btn => btn.classList.remove('selected'));
       }
 
       document.getElementById('wrongSubmitBtn').classList.remove('hidden');
       document.getElementById('wrongResultSection').classList.add('hidden');
     }
 
-    // Select options
     function selectWrongOption(value) {
       if (wrongAnswered) return;
       selectedWrongAnswer = value;
-      document.querySelectorAll('#wrongChoiceOptions .option-btn').forEach(btn => {
-        btn.classList.toggle('selected', btn.dataset.value === value);
+      document.querySelectorAll('#wrongChoiceOptions button').forEach(btn => {
+        btn.classList.toggle('border-purple-500', btn.dataset.value === value);
+        btn.classList.toggle('bg-purple-500/20', btn.dataset.value === value);
       });
     }
 
     function selectWrongTF(value) {
       if (wrongAnswered) return;
       selectedWrongAnswer = value;
-      document.querySelectorAll('#wrongTfButtons .tf-btn').forEach(btn => {
-        btn.classList.toggle('selected', btn.dataset.value === value);
+      document.querySelectorAll('#wrongTfButtons button').forEach(btn => {
+        const isSelected = btn.dataset.value === value;
+        btn.classList.toggle('border-purple-500', isSelected);
+        btn.classList.toggle('bg-purple-500/20', isSelected);
       });
     }
 
-    // Submit answer
     function submitWrongAnswer() {
       const item = practiceWrongList[currentWrongIndex];
       const q = item.question;
@@ -401,12 +404,9 @@
       }
 
       wrongAnswered = true;
-      const isCorrect = selectedWrongAnswer.trim().toLowerCase() === q.answer.trim().toLowerCase();
-
-      // Update review count
       Storage.incrementWrongReview(item.id);
+      const isCorrect = selectedWrongAnswer.trim().toLowerCase() === (q.answer || '').trim().toLowerCase();
 
-      // Show result
       document.getElementById('wrongSubmitBtn').classList.add('hidden');
       document.getElementById('wrongResultSection').classList.remove('hidden');
 
@@ -415,31 +415,29 @@
       const resultText = document.getElementById('wrongResultText');
 
       if (isCorrect) {
-        resultBanner.className = 'p-4 rounded-lg mb-4 bg-green-50 text-green-800';
-        resultIcon.className = 'fas fa-check-circle text-2xl mr-3 text-green-500';
+        resultBanner.className = 'p-4 rounded-xl mb-4 bg-emerald-500/20 text-emerald-300';
+        resultIcon.className = 'fas fa-check-circle text-3xl mr-4';
         resultText.textContent = '回答正确！';
       } else {
-        resultBanner.className = 'p-4 rounded-lg mb-4 bg-red-50 text-red-800';
-        resultIcon.className = 'fas fa-times-circle text-2xl mr-3 text-red-500';
+        resultBanner.className = 'p-4 rounded-xl mb-4 bg-rose-500/20 text-rose-300';
+        resultIcon.className = 'fas fa-times-circle text-3xl mr-4';
         resultText.textContent = '还是错了，再加油！';
       }
 
       document.getElementById('wrongCorrectAnswer').textContent = `正确答案：${q.answer}`;
       document.getElementById('wrongExplanationText').textContent = q.explanation || '暂无解析';
 
-      // Highlight options
       if (q.type === 'choice') {
-        document.querySelectorAll('#wrongChoiceOptions .option-btn').forEach(btn => {
+        document.querySelectorAll('#wrongChoiceOptions button').forEach(btn => {
           if (btn.dataset.value === q.answer) {
-            btn.classList.add('correct');
+            btn.classList.add('border-emerald-500', 'bg-emerald-500/20');
           } else if (btn.dataset.value === selectedWrongAnswer && !isCorrect) {
-            btn.classList.add('wrong');
+            btn.classList.add('border-rose-500', 'bg-rose-500/20');
           }
         });
       }
     }
 
-    // Mark as mastered
     function markAsMastered() {
       const item = practiceWrongList[currentWrongIndex];
       Storage.markWrongMastered(item.id);
@@ -453,7 +451,6 @@
       }
     }
 
-    // Next question
     function nextWrongQuestion() {
       if (currentWrongIndex < practiceWrongList.length - 1) {
         currentWrongIndex++;
@@ -464,14 +461,20 @@
       }
     }
 
-    // Exit practice
     function exitWrongPractice() {
       document.getElementById('practiceWrongView').classList.add('hidden');
-      document.querySelector('.flex.flex-wrap.gap-4.mb-6').classList.remove('hidden');
+      document.querySelector('.flex.flex-wrap.items-center').classList.remove('hidden');
+      document.querySelector('.grid.grid-cols-3').classList.remove('hidden');
       loadWrongAnswers();
     }
 
-    // Init
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
     loadWrongAnswers();
   </script>
 </body>

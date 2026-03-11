@@ -6,283 +6,247 @@
   <title>创建题目 - 学霸助手</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
+  <style>
+    *{font-family:'Inter',system-ui,sans-serif}
+    .glass{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1)}
+    .nav-blur{background:rgba(15,23,42,0.8);backdrop-filter:blur(12px)}
+    .tab-btn{transition:all 0.2s}
+    .tab-btn.active{color:#a78bfa;border-bottom-color:#a78bfa}
+    .type-btn.active{background:rgba(139,92,246,0.2);border-color:#8b5cf6;color:#a78bfa}
+    .answer-btn.active{background:rgba(34,197,94,0.2);border-color:#22c55e;color:#22c55e}
+  </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-slate-950 text-white min-h-screen">
   
-  <!-- Navigation -->
-  <nav class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-4">
+  <nav class="nav-blur fixed top-0 left-0 right-0 z-50 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex justify-between items-center h-16">
-        <a href="index.html" class="flex items-center space-x-2">
-          <i class="fas fa-graduation-cap text-2xl"></i>
+        <a href="index.html" class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+            <i class="fas fa-graduation-cap text-lg"></i>
+          </div>
           <span class="font-bold text-xl">学霸助手</span>
         </a>
-        <div class="hidden md:flex space-x-1">
-          <a href="index.html" class="nav-link"><i class="fas fa-home"></i> 首页</a>
-          <a href="create.html" class="nav-link active"><i class="fas fa-plus-circle"></i> 创建题目</a>
-          <a href="bank.html" class="nav-link"><i class="fas fa-database"></i> 题库</a>
-          <a href="practice.html" class="nav-link"><i class="fas fa-book-reader"></i> 刷题</a>
-          <a href="exam.html" class="nav-link"><i class="fas fa-clock"></i> 考试</a>
-          <a href="wrong.html" class="nav-link"><i class="fas fa-times-circle"></i> 错题本</a>
+        <div class="hidden md:flex items-center space-x-1">
+          <a href="index.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">首页</a>
+          <a href="practice.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">刷题</a>
+          <a href="wrong.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">错题本</a>
+          <a href="bank.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">题库</a>
         </div>
-        <button id="mobileMenuBtn" class="md:hidden p-2">
-          <i class="fas fa-bars text-xl"></i>
-        </button>
       </div>
-    </div>
-    <div id="mobileMenu" class="hidden md:hidden bg-blue-700 pb-4">
-      <a href="index.html" class="block px-4 py-2 hover:bg-blue-600">首页</a>
-      <a href="create.html" class="block px-4 py-2 hover:bg-blue-600">创建题目</a>
-      <a href="bank.html" class="block px-4 py-2 hover:bg-blue-600">题库</a>
-      <a href="practice.html" class="block px-4 py-2 hover:bg-blue-600">刷题</a>
-      <a href="exam.html" class="block px-4 py-2 hover:bg-blue-600">考试</a>
-      <a href="wrong.html" class="block px-4 py-2 hover:bg-blue-600">错题本</a>
     </div>
   </nav>
 
-  <!-- Header -->
-  <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-8 px-4">
-    <div class="max-w-4xl mx-auto">
-      <h1 class="text-3xl font-bold mb-2">创建题目</h1>
-      <p class="text-blue-100">手动添加或使用 AI 生成相似题目</p>
-    </div>
-  </header>
-
-  <main class="max-w-4xl mx-auto px-4 py-8">
+  <main class="pt-24 pb-12 px-4 max-w-3xl mx-auto">
     
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold mb-2">创建题目</h1>
+      <p class="text-slate-400">手动添加或使用 AI 生成相似题目</p>
+    </div>
+
     <!-- Tabs -->
-    <div class="flex border-b border-gray-200 mb-6">
-      <button id="tabManual" class="tab-btn active" onclick="switchTab('manual')">
+    <div class="flex border-b border-slate-700 mb-6">
+      <button id="tabManual" class="tab-btn px-6 py-3 text-slate-400 font-medium border-b-2 border-transparent active" onclick="switchTab('manual')">
         <i class="fas fa-edit mr-2"></i>手动创建
       </button>
-      <button id="tabSimilar" class="tab-btn" onclick="switchTab('similar')">
-        <i class="fas fa-magic mr-2"></i>AI 相似题生成
+      <button id="tabSimilar" class="tab-btn px-6 py-3 text-slate-400 font-medium border-b-2 border-transparent" onclick="switchTab('similar')">
+        <i class="fas fa-wand-magic-sparkles mr-2"></i>AI 相似题
+      </button>
+      <button id="tabUpload" class="tab-btn px-6 py-3 text-slate-400 font-medium border-b-2 border-transparent" onclick="switchTab('upload')">
+        <i class="fas fa-upload mr-2"></i>上传试卷
       </button>
     </div>
 
-    <!-- Manual Creation Tab -->
+    <!-- Manual Tab -->
     <div id="manualTab" class="tab-content">
-      <div class="card">
-        <h2 class="text-lg font-semibold mb-4">添加新题目</h2>
-        
-        <!-- Question Type -->
-        <div class="mb-4">
-          <label class="label">题目类型</label>
+      <div class="glass rounded-2xl p-6">
+        <div class="mb-6">
+          <label class="block text-sm text-slate-400 mb-3">题目类型</label>
           <div class="flex gap-2">
-            <button type="button" class="type-btn active" data-type="choice" onclick="setQuestionType('choice')">
+            <button type="button" class="type-btn px-4 py-2 rounded-lg border border-slate-700 text-sm font-medium active" data-type="choice" onclick="setQuestionType('choice')">
               <i class="fas fa-list-ul mr-1"></i>选择题
             </button>
-            <button type="button" class="type-btn" data-type="blank" onclick="setQuestionType('blank')">
+            <button type="button" class="type-btn px-4 py-2 rounded-lg border border-slate-700 text-sm font-medium" data-type="blank" onclick="setQuestionType('blank')">
               <i class="fas fa-pen mr-1"></i>填空题
             </button>
-            <button type="button" class="type-btn" data-type="truefalse" onclick="setQuestionType('truefalse')">
+            <button type="button" class="type-btn px-4 py-2 rounded-lg border border-slate-700 text-sm font-medium" data-type="truefalse" onclick="setQuestionType('truefalse')">
               <i class="fas fa-check-circle mr-1"></i>判断题
             </button>
           </div>
         </div>
 
-        <!-- Question Text -->
         <div class="mb-4">
-          <label class="label">题目内容</label>
-          <textarea id="questionText" class="input h-24" placeholder="输入题目内容..."></textarea>
+          <label class="block text-sm text-slate-400 mb-2">题目内容</label>
+          <textarea id="questionText" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 h-24 focus:outline-none focus:border-purple-500" placeholder="输入题目内容..."></textarea>
         </div>
 
-        <!-- Options (for choice questions) -->
         <div id="optionsSection" class="mb-4">
-          <label class="label">选项</label>
+          <label class="block text-sm text-slate-400 mb-2">选项</label>
           <div class="space-y-2">
-            <div class="flex gap-2">
-              <span class="w-8 h-10 flex items-center justify-center bg-gray-100 rounded">A</span>
-              <input type="text" id="optionA" class="input flex-1" placeholder="选项 A">
-            </div>
-            <div class="flex gap-2">
-              <span class="w-8 h-10 flex items-center justify-center bg-gray-100 rounded">B</span>
-              <input type="text" id="optionB" class="input flex-1" placeholder="选项 B">
-            </div>
-            <div class="flex gap-2">
-              <span class="w-8 h-10 flex items-center justify-center bg-gray-100 rounded">C</span>
-              <input type="text" id="optionC" class="input flex-1" placeholder="选项 C">
-            </div>
-            <div class="flex gap-2">
-              <span class="w-8 h-10 flex items-center justify-center bg-gray-100 rounded">D</span>
-              <input type="text" id="optionD" class="input flex-1" placeholder="选项 D">
-            </div>
+            <div class="flex gap-2"><span class="w-10 h-10 flex items-center justify-center bg-slate-800 rounded-lg">A</span><input type="text" id="optionA" class="flex-1 bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-purple-500" placeholder="选项 A"></div>
+            <div class="flex gap-2"><span class="w-10 h-10 flex items-center justify-center bg-slate-800 rounded-lg">B</span><input type="text" id="optionB" class="flex-1 bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-purple-500" placeholder="选项 B"></div>
+            <div class="flex gap-2"><span class="w-10 h-10 flex items-center justify-center bg-slate-800 rounded-lg">C</span><input type="text" id="optionC" class="flex-1 bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-purple-500" placeholder="选项 C"></div>
+            <div class="flex gap-2"><span class="w-10 h-10 flex items-center justify-center bg-slate-800 rounded-lg">D</span><input type="text" id="optionD" class="flex-1 bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-purple-500" placeholder="选项 D"></div>
           </div>
         </div>
 
-        <!-- Answer -->
         <div class="mb-4">
-          <label class="label">正确答案</label>
+          <label class="block text-sm text-slate-400 mb-2">正确答案</label>
           <div id="answerChoice" class="flex gap-2">
-            <button type="button" class="answer-btn" data-answer="A" onclick="setAnswer('A')">A</button>
-            <button type="button" class="answer-btn" data-answer="B" onclick="setAnswer('B')">B</button>
-            <button type="button" class="answer-btn" data-answer="C" onclick="setAnswer('C')">C</button>
-            <button type="button" class="answer-btn" data-answer="D" onclick="setAnswer('D')">D</button>
+            <button type="button" class="answer-btn px-4 py-2 rounded-lg border border-slate-700 font-medium" data-answer="A" onclick="setAnswer('A')">A</button>
+            <button type="button" class="answer-btn px-4 py-2 rounded-lg border border-slate-700 font-medium" data-answer="B" onclick="setAnswer('B')">B</button>
+            <button type="button" class="answer-btn px-4 py-2 rounded-lg border border-slate-700 font-medium" data-answer="C" onclick="setAnswer('C')">C</button>
+            <button type="button" class="answer-btn px-4 py-2 rounded-lg border border-slate-700 font-medium" data-answer="D" onclick="setAnswer('D')">D</button>
           </div>
-          <input type="text" id="answerText" class="input hidden" placeholder="输入正确答案">
+          <input type="text" id="answerText" class="hidden w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500" placeholder="输入正确答案">
           <div id="answerTrueFalse" class="hidden flex gap-2">
-            <button type="button" class="answer-btn" data-answer="正确" onclick="setAnswer('正确')">
-              <i class="fas fa-check mr-1"></i>正确
-            </button>
-            <button type="button" class="answer-btn" data-answer="错误" onclick="setAnswer('错误')">
-              <i class="fas fa-times mr-1"></i>错误
-            </button>
+            <button type="button" class="answer-btn px-4 py-2 rounded-lg border border-slate-700 font-medium" data-answer="正确" onclick="setAnswer('正确')"><i class="fas fa-check mr-1"></i>正确</button>
+            <button type="button" class="answer-btn px-4 py-2 rounded-lg border border-slate-700 font-medium" data-answer="错误" onclick="setAnswer('错误')"><i class="fas fa-times mr-1"></i>错误</button>
           </div>
         </div>
 
-        <!-- Explanation -->
         <div class="mb-4">
-          <label class="label">解析 (可选)</label>
-          <textarea id="explanation" class="input h-20" placeholder="输入答案解析..."></textarea>
+          <label class="block text-sm text-slate-400 mb-2">解析 (可选)</label>
+          <textarea id="explanation" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 h-20 focus:outline-none focus:border-purple-500" placeholder="输入解析..."></textarea>
         </div>
 
-        <!-- Difficulty & Knowledge Point -->
-        <div class="grid grid-cols-2 gap-4 mb-4">
+        <div class="grid grid-cols-2 gap-4 mb-6">
           <div>
-            <label class="label">难度</label>
-            <select id="difficulty" class="input">
+            <label class="block text-sm text-slate-400 mb-2">难度</label>
+            <select id="difficulty" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none">
               <option value="easy">简单</option>
               <option value="medium" selected>中等</option>
               <option value="hard">困难</option>
             </select>
           </div>
           <div>
-            <label class="label">知识点 (可选)</label>
-            <input type="text" id="knowledgePoint" class="input" placeholder="如：一元二次方程">
+            <label class="block text-sm text-slate-400 mb-2">保存到题库</label>
+            <div class="flex gap-2">
+              <select id="targetBank" class="flex-1 bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none">
+                <option value="">选择题库</option>
+              </select>
+              <button type="button" onclick="showNewBankModal()" class="px-4 py-3 rounded-xl border border-slate-700 hover:bg-slate-800 transition"><i class="fas fa-plus"></i></button>
+            </div>
           </div>
         </div>
 
-        <!-- Target Bank -->
-        <div class="mb-6">
-          <label class="label">保存到题库</label>
-          <div class="flex gap-2">
-            <select id="targetBank" class="input flex-1">
-              <option value="">-- 选择题库 --</option>
-            </select>
-            <button type="button" onclick="showNewBankModal()" class="btn-secondary">
-              <i class="fas fa-plus"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- Save Button -->
-        <button onclick="saveManualQuestion()" class="btn-primary w-full">
+        <button onclick="saveManualQuestion()" class="w-full py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 font-semibold hover:opacity-90 transition">
           <i class="fas fa-save mr-2"></i>保存题目
         </button>
       </div>
     </div>
 
-    <!-- Similar Generation Tab -->
+    <!-- Similar Tab -->
     <div id="similarTab" class="tab-content hidden">
-      
-      <!-- Input Section -->
-      <div class="card mb-6">
-        <h2 class="text-lg font-semibold mb-4">
-          <i class="fas fa-magic text-purple-600 mr-2"></i>AI 相似题生成
-        </h2>
-        <p class="text-gray-500 text-sm mb-4">输入一道真题或例题，AI 将分析其结构并生成相似的练习题</p>
+      <div class="glass rounded-2xl p-6 mb-6">
+        <h3 class="font-semibold mb-2"><i class="fas fa-wand-magic-sparkles text-purple-400 mr-2"></i>AI 相似题生成</h3>
+        <p class="text-slate-400 text-sm mb-4">输入一道真题，AI 将分析并生成相似练习题</p>
         
         <div class="mb-4">
-          <label class="label">例题内容</label>
-          <textarea id="exampleQuestion" class="input h-32" placeholder="粘贴一道真题或例题...
-
-例如：
-已知函数 f(x) = x² + 2x - 3，求 f(x) = 0 的解。
-
-或者：
-下列哪个是中国的首都？
-A. 上海  B. 北京  C. 广州  D. 深圳"></textarea>
+          <label class="block text-sm text-slate-400 mb-2">例题内容</label>
+          <textarea id="exampleQuestion" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 h-32 focus:outline-none focus:border-purple-500" placeholder="粘贴一道真题..."></textarea>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+        <div class="grid grid-cols-2 gap-4 mb-4">
           <div>
-            <label class="label">生成数量</label>
-            <select id="generateCount" class="input">
+            <label class="block text-sm text-slate-400 mb-2">生成数量</label>
+            <select id="generateCount" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none">
               <option value="3">3 题</option>
               <option value="5" selected>5 题</option>
               <option value="10">10 题</option>
             </select>
           </div>
           <div>
-            <label class="label">目标难度</label>
-            <select id="generateDifficulty" class="input">
+            <label class="block text-sm text-slate-400 mb-2">目标难度</label>
+            <select id="generateDifficulty" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none">
               <option value="same">保持原难度</option>
               <option value="easy">简单</option>
               <option value="medium">中等</option>
               <option value="hard">困难</option>
             </select>
           </div>
-          <div class="col-span-2">
-            <label class="label">API Key (Kimi)</label>
-            <div class="relative">
-              <input type="password" id="apiKey" class="input pr-10" placeholder="sk-...">
-              <button type="button" onclick="toggleApiKey()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-                <i id="apiKeyIcon" class="fas fa-eye"></i>
-              </button>
-            </div>
-          </div>
         </div>
 
-        <button id="generateBtn" onclick="generateSimilar()" class="btn-primary w-full">
+        <button id="generateBtn" onclick="generateSimilar()" class="w-full py-4 rounded-xl bg-gradient-to-r from-violet-500 to-purple-600 font-semibold hover:opacity-90 transition">
           <i class="fas fa-wand-magic-sparkles mr-2"></i>生成相似题目
         </button>
       </div>
 
-      <!-- Loading -->
-      <div id="generating" class="hidden card text-center py-12">
-        <div class="loading-spinner mx-auto mb-4"></div>
-        <p class="text-gray-600">AI 正在分析并生成题目...</p>
-        <p class="text-gray-400 text-sm mt-2">这可能需要 10-30 秒</p>
+      <div id="generating" class="hidden glass rounded-2xl p-8 text-center">
+        <div class="w-16 h-16 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin mx-auto mb-4"></div>
+        <p class="text-lg font-medium">AI 正在生成题目...</p>
+        <p class="text-slate-400 text-sm mt-1">这可能需要几秒钟</p>
       </div>
 
-      <!-- Analysis Result -->
-      <div id="analysisSection" class="hidden card mb-6">
-        <h3 class="font-semibold mb-4">
-          <i class="fas fa-search text-blue-600 mr-2"></i>原题分析
-        </h3>
-        <div id="analysisContent" class="grid grid-cols-3 gap-4">
-          <!-- Filled by JS -->
-        </div>
+      <div id="analysisSection" class="hidden glass rounded-2xl p-6 mb-6">
+        <h3 class="font-semibold mb-4"><i class="fas fa-search text-indigo-400 mr-2"></i>原题分析</h3>
+        <div id="analysisContent" class="grid grid-cols-3 gap-4"></div>
       </div>
 
-      <!-- Generated Questions -->
       <div id="generatedSection" class="hidden">
         <div class="flex justify-between items-center mb-4">
-          <h3 class="font-semibold">
-            <i class="fas fa-list text-green-600 mr-2"></i>生成的相似题目
-          </h3>
+          <h3 class="font-semibold"><i class="fas fa-list text-emerald-400 mr-2"></i>生成的题目</h3>
           <div class="flex gap-2">
-            <select id="saveToBankSelect" class="input py-1 text-sm">
-              <option value="">-- 选择题库 --</option>
+            <select id="saveToBankSelect" class="bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none">
+              <option value="">选择题库</option>
             </select>
-            <button onclick="saveGeneratedQuestions()" class="btn-primary text-sm py-1">
+            <button onclick="saveGeneratedQuestions()" class="px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-600 text-sm font-medium">
               <i class="fas fa-save mr-1"></i>保存全部
             </button>
           </div>
         </div>
-        <div id="generatedQuestions" class="space-y-4">
-          <!-- Filled by JS -->
+        <div id="generatedQuestions" class="space-y-4"></div>
+      </div>
+    </div>
+
+    <!-- Upload Tab -->
+    <div id="uploadTab" class="tab-content hidden">
+      <div class="glass rounded-2xl p-6">
+        <h3 class="font-semibold mb-2"><i class="fas fa-upload text-blue-400 mr-2"></i>上传试卷</h3>
+        <p class="text-slate-400 text-sm mb-4">粘贴试卷内容，AI 将提取题目并生成相似练习</p>
+        
+        <div class="mb-4">
+          <label class="block text-sm text-slate-400 mb-2">试卷内容</label>
+          <textarea id="uploadContent" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 h-48 focus:outline-none focus:border-purple-500" placeholder="粘贴试卷文字内容..."></textarea>
+        </div>
+
+        <button id="analyzeBtn" onclick="analyzeUpload()" class="w-full py-4 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-600 font-semibold hover:opacity-90 transition">
+          <i class="fas fa-search mr-2"></i>分析试卷
+        </button>
+      </div>
+
+      <div id="uploadAnalyzing" class="hidden glass rounded-2xl p-8 text-center mt-6">
+        <div class="w-16 h-16 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin mx-auto mb-4"></div>
+        <p class="text-lg font-medium">AI 正在分析试卷...</p>
+      </div>
+
+      <div id="uploadResults" class="hidden mt-6">
+        <div class="glass rounded-2xl p-6">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="font-semibold"><i class="fas fa-file-lines text-blue-400 mr-2"></i>提取的题目</h3>
+            <button onclick="saveExtractedQuestions()" class="px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-600 text-sm font-medium">
+              <i class="fas fa-save mr-1"></i>保存到题库
+            </button>
+          </div>
+          <div id="extractedQuestions" class="space-y-4"></div>
         </div>
       </div>
     </div>
   </main>
 
   <!-- New Bank Modal -->
-  <div id="newBankModal" class="modal hidden">
-    <div class="modal-content">
+  <div id="newBankModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="glass rounded-2xl p-6 w-full max-w-md">
       <h3 class="text-lg font-semibold mb-4">创建新题库</h3>
       <div class="mb-4">
-        <label class="label">题库名称</label>
-        <input type="text" id="newBankName" class="input" placeholder="如：高中数学必修一">
+        <label class="block text-sm text-slate-400 mb-2">题库名称</label>
+        <input type="text" id="newBankName" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500" placeholder="题库名称">
       </div>
-      <div class="mb-4">
-        <label class="label">描述 (可选)</label>
-        <input type="text" id="newBankDesc" class="input" placeholder="简短描述">
-      </div>
-      <div class="flex gap-2">
-        <button onclick="closeNewBankModal()" class="btn-secondary flex-1">取消</button>
-        <button onclick="createNewBank()" class="btn-primary flex-1">创建</button>
+      <div class="flex gap-3">
+        <button onclick="closeNewBankModal()" class="flex-1 py-3 rounded-xl border border-slate-700 font-medium hover:bg-slate-800 transition">取消</button>
+        <button onclick="createNewBank()" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 font-medium">创建</button>
       </div>
     </div>
   </div>
@@ -294,212 +258,112 @@ A. 上海  B. 北京  C. 广州  D. 深圳"></textarea>
     let currentType = 'choice';
     let currentAnswer = '';
     let generatedQuestions = [];
+    let extractedQuestions = [];
 
-    // Switch tabs
     function switchTab(tab) {
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
-      
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
       document.getElementById(`tab${tab.charAt(0).toUpperCase() + tab.slice(1)}`).classList.add('active');
       document.getElementById(`${tab}Tab`).classList.remove('hidden');
     }
 
-    // Check URL hash for tab
-    if (window.location.hash === '#similar') {
-      switchTab('similar');
-    }
+    if (window.location.hash === '#similar') switchTab('similar');
+    if (window.location.hash === '#upload') switchTab('upload');
 
-    // Set question type
     function setQuestionType(type) {
       currentType = type;
-      document.querySelectorAll('.type-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.type === type);
-      });
-
-      const optionsSection = document.getElementById('optionsSection');
-      const answerChoice = document.getElementById('answerChoice');
-      const answerText = document.getElementById('answerText');
-      const answerTrueFalse = document.getElementById('answerTrueFalse');
-
-      optionsSection.classList.toggle('hidden', type !== 'choice');
-      answerChoice.classList.toggle('hidden', type !== 'choice');
-      answerText.classList.toggle('hidden', type !== 'blank');
-      answerTrueFalse.classList.toggle('hidden', type !== 'truefalse');
-
+      document.querySelectorAll('.type-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.type === type));
+      document.getElementById('optionsSection').classList.toggle('hidden', type !== 'choice');
+      document.getElementById('answerChoice').classList.toggle('hidden', type !== 'choice');
+      document.getElementById('answerText').classList.toggle('hidden', type !== 'blank');
+      document.getElementById('answerTrueFalse').classList.toggle('hidden', type !== 'truefalse');
       currentAnswer = '';
       document.querySelectorAll('.answer-btn').forEach(btn => btn.classList.remove('active'));
     }
 
-    // Set answer
     function setAnswer(answer) {
       currentAnswer = answer;
-      document.querySelectorAll('.answer-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.answer === answer);
-      });
+      document.querySelectorAll('.answer-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.answer === answer));
     }
 
-    // Toggle API key visibility
-    function toggleApiKey() {
-      const input = document.getElementById('apiKey');
-      const icon = document.getElementById('apiKeyIcon');
-      if (input.type === 'password') {
-        input.type = 'text';
-        icon.classList.replace('fa-eye', 'fa-eye-slash');
-      } else {
-        input.type = 'password';
-        icon.classList.replace('fa-eye-slash', 'fa-eye');
-      }
-    }
-
-    // Load banks into selects
     function loadBankSelects() {
       const banks = Storage.getBanks();
-      const options = Object.values(banks).map(b => 
-        `<option value="${b.id}">${escapeHtml(b.name)}</option>`
-      ).join('');
-      
-      document.getElementById('targetBank').innerHTML = '<option value="">-- 选择题库 --</option>' + options;
-      document.getElementById('saveToBankSelect').innerHTML = '<option value="">-- 选择题库 --</option>' + options;
+      const options = Object.values(banks).map(b => `<option value="${b.id}">${escapeHtml(b.name)}</option>`).join('');
+      document.getElementById('targetBank').innerHTML = '<option value="">选择题库</option>' + options;
+      document.getElementById('saveToBankSelect').innerHTML = '<option value="">选择题库</option>' + options;
     }
 
-    // Show new bank modal
-    function showNewBankModal() {
-      document.getElementById('newBankModal').classList.remove('hidden');
-    }
+    function showNewBankModal() { document.getElementById('newBankModal').classList.remove('hidden'); }
+    function closeNewBankModal() { document.getElementById('newBankModal').classList.add('hidden'); document.getElementById('newBankName').value = ''; }
 
-    function closeNewBankModal() {
-      document.getElementById('newBankModal').classList.add('hidden');
-      document.getElementById('newBankName').value = '';
-      document.getElementById('newBankDesc').value = '';
-    }
-
-    // Create new bank
     function createNewBank() {
       const name = document.getElementById('newBankName').value.trim();
-      const desc = document.getElementById('newBankDesc').value.trim();
-      
-      if (!name) {
-        alert('请输入题库名称');
-        return;
-      }
-
-      const bank = Storage.createBank(name, desc);
+      if (!name) { alert('请输入题库名称'); return; }
+      const bank = Storage.createBank(name, '');
       closeNewBankModal();
       loadBankSelects();
-      
-      // Select the new bank
       document.getElementById('targetBank').value = bank.id;
       document.getElementById('saveToBankSelect').value = bank.id;
-      
-      alert('题库创建成功！');
     }
 
-    // Save manual question
     function saveManualQuestion() {
       const questionText = document.getElementById('questionText').value.trim();
       const explanation = document.getElementById('explanation').value.trim();
       const difficulty = document.getElementById('difficulty').value;
-      const knowledgePoint = document.getElementById('knowledgePoint').value.trim();
       const bankId = document.getElementById('targetBank').value;
 
-      if (!questionText) {
-        alert('请输入题目内容');
-        return;
-      }
+      if (!questionText) { alert('请输入题目内容'); return; }
+      if (!bankId) { alert('请选择题库'); return; }
 
       let answer = currentAnswer;
       let options = null;
 
       if (currentType === 'choice') {
-        options = [
-          document.getElementById('optionA').value.trim(),
-          document.getElementById('optionB').value.trim(),
-          document.getElementById('optionC').value.trim(),
-          document.getElementById('optionD').value.trim()
-        ];
-        if (options.some(o => !o)) {
-          alert('请填写所有选项');
-          return;
-        }
-        if (!answer) {
-          alert('请选择正确答案');
-          return;
-        }
+        options = ['A','B','C','D'].map(l => document.getElementById('option' + l).value.trim());
+        if (options.some(o => !o)) { alert('请填写所有选项'); return; }
+        if (!answer) { alert('请选择正确答案'); return; }
       } else if (currentType === 'blank') {
         answer = document.getElementById('answerText').value.trim();
-        if (!answer) {
-          alert('请输入正确答案');
-          return;
-        }
-      } else if (currentType === 'truefalse') {
-        if (!answer) {
-          alert('请选择正确答案');
-          return;
-        }
+        if (!answer) { alert('请输入正确答案'); return; }
+      } else if (!answer) {
+        alert('请选择正确答案'); return;
       }
 
-      if (!bankId) {
-        alert('请选择或创建一个题库');
-        return;
-      }
-
-      const question = {
+      Storage.addQuestionToBank(bankId, {
         id: generateId(),
         type: currentType,
         question: questionText,
-        options: options,
-        answer: answer,
-        explanation: explanation,
-        difficulty: difficulty,
-        knowledgePoint: knowledgePoint,
+        options,
+        answer,
+        explanation,
+        difficulty,
         source: 'manual',
         createdAt: Date.now()
-      };
+      });
 
-      Storage.addQuestionToBank(bankId, question);
-      
-      // Clear form
       document.getElementById('questionText').value = '';
-      document.getElementById('optionA').value = '';
-      document.getElementById('optionB').value = '';
-      document.getElementById('optionC').value = '';
-      document.getElementById('optionD').value = '';
+      ['A','B','C','D'].forEach(l => document.getElementById('option' + l).value = '');
       document.getElementById('answerText').value = '';
       document.getElementById('explanation').value = '';
-      document.getElementById('knowledgePoint').value = '';
       currentAnswer = '';
       document.querySelectorAll('.answer-btn').forEach(btn => btn.classList.remove('active'));
-
-      alert('题目保存成功！');
+      alert('保存成功！');
     }
 
-    // Generate similar questions
     async function generateSimilar() {
       const example = document.getElementById('exampleQuestion').value.trim();
       const count = document.getElementById('generateCount').value;
       const difficulty = document.getElementById('generateDifficulty').value;
-      const apiKey = document.getElementById('apiKey').value.trim();
 
-      if (!example) {
-        alert('请输入例题');
-        return;
-      }
-      if (!apiKey) {
-        alert('请输入 API Key');
-        return;
-      }
+      if (!example) { alert('请输入例题'); return; }
 
-      // Save API key for convenience
-      localStorage.setItem('kimi_api_key', apiKey);
-
-      // Show loading
       document.getElementById('generating').classList.remove('hidden');
       document.getElementById('analysisSection').classList.add('hidden');
       document.getElementById('generatedSection').classList.add('hidden');
       document.getElementById('generateBtn').disabled = true;
 
       try {
-        const result = await API.generateSimilarQuestions(example, count, difficulty, apiKey);
+        const result = await API.generateSimilarQuestions(example, count, difficulty);
         displayGeneratedResults(result);
       } catch (error) {
         alert('生成失败: ' + error.message);
@@ -509,137 +373,111 @@ A. 上海  B. 北京  C. 广州  D. 深圳"></textarea>
       }
     }
 
-    // Display generated results
     function displayGeneratedResults(result) {
-      // Show analysis
-      const analysis = result.原题分析 || result.analysis || {};
+      const analysis = result.analysis || result.原题分析 || {};
       document.getElementById('analysisContent').innerHTML = `
-        <div class="bg-blue-50 p-4 rounded-lg">
-          <div class="text-sm text-gray-500 mb-1">知识点</div>
-          <div class="font-medium">${escapeHtml(analysis.知识点 || analysis.topic || '未知')}</div>
-        </div>
-        <div class="bg-green-50 p-4 rounded-lg">
-          <div class="text-sm text-gray-500 mb-1">难度</div>
-          <div class="font-medium">${escapeHtml(analysis.难度 || analysis.difficulty || '中等')}</div>
-        </div>
-        <div class="bg-purple-50 p-4 rounded-lg">
-          <div class="text-sm text-gray-500 mb-1">题型</div>
-          <div class="font-medium">${escapeHtml(analysis.题型 || analysis.type || '未知')}</div>
-        </div>
+        <div class="bg-indigo-500/10 p-4 rounded-xl"><div class="text-slate-400 text-sm mb-1">知识点</div><div class="font-medium">${escapeHtml(analysis.topic || analysis.知识点 || '未知')}</div></div>
+        <div class="bg-emerald-500/10 p-4 rounded-xl"><div class="text-slate-400 text-sm mb-1">难度</div><div class="font-medium">${escapeHtml(analysis.difficulty || analysis.难度 || '中等')}</div></div>
+        <div class="bg-purple-500/10 p-4 rounded-xl"><div class="text-slate-400 text-sm mb-1">题型</div><div class="font-medium">${escapeHtml(analysis.type || analysis.题型 || '未知')}</div></div>
       `;
       document.getElementById('analysisSection').classList.remove('hidden');
 
-      // Show questions
-      generatedQuestions = result.相似题目 || result.questions || [];
-      const questionsHtml = generatedQuestions.map((q, i) => `
-        <div class="card" data-index="${i}">
-          <div class="flex justify-between items-start mb-3">
-            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">题目 ${i + 1}</span>
-            <button onclick="removeGeneratedQuestion(${i})" class="text-gray-400 hover:text-red-500">
-              <i class="fas fa-times"></i>
-            </button>
+      generatedQuestions = result.questions || result.相似题目 || [];
+      document.getElementById('generatedQuestions').innerHTML = generatedQuestions.map((q, i) => `
+        <div class="glass rounded-xl p-4">
+          <div class="flex justify-between items-start mb-2">
+            <span class="px-2 py-1 rounded text-xs font-medium bg-purple-500/20 text-purple-300">题目 ${i + 1}</span>
+            <button onclick="removeGeneratedQuestion(${i})" class="text-slate-500 hover:text-rose-400"><i class="fas fa-times"></i></button>
           </div>
-          <div class="mb-3">
-            <textarea class="input text-sm" rows="2" onchange="updateGeneratedQuestion(${i}, 'question', this.value)">${escapeHtml(q.question)}</textarea>
-          </div>
-          ${q.options ? `
-            <div class="grid grid-cols-2 gap-2 mb-3">
-              ${q.options.map((opt, j) => `
-                <div class="flex items-center gap-2">
-                  <span class="text-xs text-gray-500">${String.fromCharCode(65 + j)}</span>
-                  <input type="text" class="input text-sm py-1" value="${escapeHtml(opt)}" 
-                    onchange="updateGeneratedOption(${i}, ${j}, this.value)">
-                </div>
-              `).join('')}
-            </div>
-          ` : ''}
+          <p class="mb-2">${escapeHtml(q.question)}</p>
           <details class="text-sm">
-            <summary class="cursor-pointer text-blue-600 hover:text-blue-800 mb-2">答案与解析</summary>
-            <div class="space-y-2 p-3 bg-gray-50 rounded">
-              <div>
-                <label class="text-xs text-gray-500">答案</label>
-                <input type="text" class="input text-sm py-1" value="${escapeHtml(q.answer)}"
-                  onchange="updateGeneratedQuestion(${i}, 'answer', this.value)">
-              </div>
-              <div>
-                <label class="text-xs text-gray-500">解析</label>
-                <textarea class="input text-sm py-1" rows="2" 
-                  onchange="updateGeneratedQuestion(${i}, 'explanation', this.value)">${escapeHtml(q.explanation || '')}</textarea>
-              </div>
+            <summary class="cursor-pointer text-purple-400">查看答案</summary>
+            <div class="mt-2 p-3 bg-slate-800/50 rounded-lg">
+              <div><strong>答案：</strong>${escapeHtml(q.answer)}</div>
+              <div class="mt-1 text-slate-400">${escapeHtml(q.explanation || '')}</div>
             </div>
           </details>
         </div>
       `).join('');
-
-      document.getElementById('generatedQuestions').innerHTML = questionsHtml;
       document.getElementById('generatedSection').classList.remove('hidden');
-    }
-
-    // Update generated question
-    function updateGeneratedQuestion(index, field, value) {
-      if (generatedQuestions[index]) {
-        generatedQuestions[index][field] = value;
-      }
-    }
-
-    function updateGeneratedOption(index, optIndex, value) {
-      if (generatedQuestions[index] && generatedQuestions[index].options) {
-        generatedQuestions[index].options[optIndex] = value;
-      }
     }
 
     function removeGeneratedQuestion(index) {
       generatedQuestions.splice(index, 1);
-      displayGeneratedResults({ 
-        原题分析: { 知识点: '已分析', 难度: '已分析', 题型: '已分析' },
-        相似题目: generatedQuestions 
-      });
+      displayGeneratedResults({ analysis: {}, questions: generatedQuestions });
     }
 
-    // Save generated questions
     function saveGeneratedQuestions() {
       const bankId = document.getElementById('saveToBankSelect').value;
-      
-      if (!bankId) {
-        alert('请选择一个题库');
-        return;
-      }
-
-      if (generatedQuestions.length === 0) {
-        alert('没有可保存的题目');
-        return;
-      }
+      if (!bankId) { alert('请选择题库'); return; }
+      if (generatedQuestions.length === 0) { alert('没有题目可保存'); return; }
 
       generatedQuestions.forEach(q => {
-        const question = {
+        Storage.addQuestionToBank(bankId, {
           id: generateId(),
           type: q.options ? 'choice' : (q.answer === '正确' || q.answer === '错误' ? 'truefalse' : 'blank'),
           question: q.question,
           options: q.options || null,
           answer: q.answer,
           explanation: q.explanation || '',
-          difficulty: 'medium',
-          knowledgePoint: '',
+          difficulty: q.difficulty || 'medium',
           source: 'ai',
           createdAt: Date.now()
-        };
-        Storage.addQuestionToBank(bankId, question);
+        });
       });
 
-      alert(`成功保存 ${generatedQuestions.length} 道题目！`);
+      alert(`保存了 ${generatedQuestions.length} 道题！`);
       generatedQuestions = [];
       document.getElementById('generatedSection').classList.add('hidden');
       document.getElementById('analysisSection').classList.add('hidden');
       document.getElementById('exampleQuestion').value = '';
     }
 
-    // Load saved API key
-    const savedApiKey = localStorage.getItem('kimi_api_key');
-    if (savedApiKey) {
-      document.getElementById('apiKey').value = savedApiKey;
+    async function analyzeUpload() {
+      const content = document.getElementById('uploadContent').value.trim();
+      if (!content) { alert('请粘贴试卷内容'); return; }
+
+      document.getElementById('uploadAnalyzing').classList.remove('hidden');
+      document.getElementById('uploadResults').classList.add('hidden');
+      document.getElementById('analyzeBtn').disabled = true;
+
+      try {
+        const result = await API.analyzeTest(content);
+        extractedQuestions = result.questions || [];
+        document.getElementById('extractedQuestions').innerHTML = extractedQuestions.map((q, i) => `
+          <div class="p-4 rounded-xl bg-slate-800/30 border border-slate-700/50">
+            <div class="flex gap-2 mb-2">
+              <span class="px-2 py-1 rounded text-xs bg-blue-500/20 text-blue-300">${i + 1}</span>
+              <span class="px-2 py-1 rounded text-xs bg-slate-700 text-slate-400">${q.type === 'choice' ? '选择题' : q.type === 'blank' ? '填空题' : '判断题'}</span>
+            </div>
+            <p>${escapeHtml(q.question)}</p>
+            <div class="text-sm text-emerald-400 mt-2">答案：${escapeHtml(q.answer)}</div>
+          </div>
+        `).join('');
+        document.getElementById('uploadResults').classList.remove('hidden');
+      } catch (error) {
+        alert('分析失败: ' + error.message);
+      } finally {
+        document.getElementById('uploadAnalyzing').classList.add('hidden');
+        document.getElementById('analyzeBtn').disabled = false;
+      }
     }
 
-    // Init
+    function saveExtractedQuestions() {
+      if (extractedQuestions.length === 0) { alert('没有题目可保存'); return; }
+      const name = prompt('题库名称：', '导入的试卷');
+      if (!name) return;
+      const bank = Storage.createBank(name, '从试卷导入');
+      extractedQuestions.forEach(q => {
+        Storage.addQuestionToBank(bank.id, { id: generateId(), ...q, source: 'import', createdAt: Date.now() });
+      });
+      alert(`保存了 ${extractedQuestions.length} 道题到「${name}」`);
+      loadBankSelects();
+    }
+
+    function escapeHtml(t) { if(!t)return''; const d=document.createElement('div'); d.textContent=t; return d.innerHTML; }
+    function generateId() { return Date.now().toString(36) + Math.random().toString(36).substr(2,9); }
+
     loadBankSelects();
   </script>
 </body>

@@ -6,167 +6,131 @@
   <title>模拟考试 - 学霸助手</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
+  <style>
+    *{font-family:'Inter',system-ui,sans-serif}
+    .glass{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1)}
+    .nav-blur{background:rgba(15,23,42,0.8);backdrop-filter:blur(12px)}
+  </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-slate-950 text-white min-h-screen">
   
-  <!-- Navigation -->
-  <nav class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-4">
+  <nav class="nav-blur fixed top-0 left-0 right-0 z-50 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex justify-between items-center h-16">
-        <a href="index.html" class="flex items-center space-x-2">
-          <i class="fas fa-graduation-cap text-2xl"></i>
+        <a href="index.html" class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+            <i class="fas fa-graduation-cap text-lg"></i>
+          </div>
           <span class="font-bold text-xl">学霸助手</span>
         </a>
-        <div class="hidden md:flex space-x-1">
-          <a href="index.html" class="nav-link"><i class="fas fa-home"></i> 首页</a>
-          <a href="create.html" class="nav-link"><i class="fas fa-plus-circle"></i> 创建题目</a>
-          <a href="bank.html" class="nav-link"><i class="fas fa-database"></i> 题库</a>
-          <a href="practice.html" class="nav-link"><i class="fas fa-book-reader"></i> 刷题</a>
-          <a href="exam.html" class="nav-link active"><i class="fas fa-clock"></i> 考试</a>
-          <a href="wrong.html" class="nav-link"><i class="fas fa-times-circle"></i> 错题本</a>
+        <div class="hidden md:flex items-center space-x-1">
+          <a href="index.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">首页</a>
+          <a href="practice.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">刷题</a>
+          <a href="wrong.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">错题本</a>
+          <a href="bank.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">题库</a>
         </div>
-        <button id="mobileMenuBtn" class="md:hidden p-2">
-          <i class="fas fa-bars text-xl"></i>
-        </button>
       </div>
-    </div>
-    <div id="mobileMenu" class="hidden md:hidden bg-blue-700 pb-4">
-      <a href="index.html" class="block px-4 py-2 hover:bg-blue-600">首页</a>
-      <a href="create.html" class="block px-4 py-2 hover:bg-blue-600">创建题目</a>
-      <a href="bank.html" class="block px-4 py-2 hover:bg-blue-600">题库</a>
-      <a href="practice.html" class="block px-4 py-2 hover:bg-blue-600">刷题</a>
-      <a href="exam.html" class="block px-4 py-2 hover:bg-blue-600">考试</a>
-      <a href="wrong.html" class="block px-4 py-2 hover:bg-blue-600">错题本</a>
     </div>
   </nav>
 
-  <!-- Header (shown when not in exam) -->
-  <header id="examHeader" class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-8 px-4">
-    <div class="max-w-4xl mx-auto">
-      <h1 class="text-3xl font-bold mb-2">模拟考试</h1>
-      <p class="text-blue-100">计时测试，模拟真实考试环境</p>
-    </div>
-  </header>
-
-  <!-- Timer Bar (shown during exam) -->
-  <div id="timerBar" class="hidden bg-white shadow-md sticky top-16 z-40">
+  <!-- Timer Bar -->
+  <div id="timerBar" class="hidden nav-blur fixed top-16 left-0 right-0 z-40 border-b border-white/10">
     <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
       <div class="flex items-center gap-4">
-        <span class="text-sm text-gray-500">剩余时间</span>
-        <span id="timerDisplay" class="text-xl font-bold text-blue-600">00:00</span>
+        <span class="text-slate-400 text-sm">剩余时间</span>
+        <span id="timerDisplay" class="text-2xl font-bold text-indigo-400">00:00</span>
       </div>
       <div class="flex items-center gap-4">
-        <span class="text-sm text-gray-500">
-          已答 <span id="answeredCount">0</span> / <span id="examTotalCount">0</span>
-        </span>
-        <button onclick="submitExam()" class="btn-primary text-sm py-1">
-          <i class="fas fa-paper-plane mr-1"></i>交卷
+        <span class="text-slate-400 text-sm">已答 <span id="answeredCount">0</span> / <span id="examTotalCount">0</span></span>
+        <button onclick="submitExam()" class="px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-600 text-sm font-medium">
+          <i class="fas fa-paper-plane mr-2"></i>交卷
         </button>
       </div>
     </div>
   </div>
 
-  <main class="max-w-4xl mx-auto px-4 py-8">
+  <main class="pt-24 pb-12 px-4 max-w-3xl mx-auto">
     
     <!-- Setup View -->
-    <div id="setupView" class="card">
-      <h2 class="text-lg font-semibold mb-4">考试设置</h2>
+    <div id="setupView">
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold mb-2">模拟考试</h1>
+        <p class="text-slate-400">计时测试，模拟真实考试环境</p>
+      </div>
       
-      <div class="mb-6">
-        <label class="label">选择题库</label>
-        <div id="examBankCheckboxes" class="space-y-2">
-          <!-- Filled by JS -->
-        </div>
-        <div id="noExamBanks" class="hidden text-center py-4 text-gray-500">
+      <div class="glass rounded-2xl p-6">
+        <h3 class="font-semibold mb-4">选择题库</h3>
+        <div id="examBankCheckboxes" class="space-y-3 mb-6"></div>
+        <div id="noExamBanks" class="hidden text-center py-4 text-slate-500">
           <p>还没有题库</p>
-          <a href="create.html" class="text-blue-600">创建题库</a>
+          <a href="index.html" class="text-purple-400">去首页生成练习</a>
         </div>
-      </div>
 
-      <div class="grid grid-cols-2 gap-4 mb-6">
-        <div>
-          <label class="label">题目数量</label>
-          <select id="examQuestionCount" class="input">
-            <option value="10">10 题</option>
-            <option value="20" selected>20 题</option>
-            <option value="30">30 题</option>
-            <option value="50">50 题</option>
-            <option value="0">全部</option>
-          </select>
+        <div class="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <label class="block text-sm text-slate-400 mb-2">题目数量</label>
+            <select id="examQuestionCount" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none">
+              <option value="10">10 题</option>
+              <option value="20" selected>20 题</option>
+              <option value="30">30 题</option>
+              <option value="0">全部</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm text-slate-400 mb-2">考试时间</label>
+            <select id="examTimeLimit" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none">
+              <option value="15">15 分钟</option>
+              <option value="30" selected>30 分钟</option>
+              <option value="45">45 分钟</option>
+              <option value="60">60 分钟</option>
+            </select>
+          </div>
         </div>
-        <div>
-          <label class="label">考试时间</label>
-          <select id="examTimeLimit" class="input">
-            <option value="10">10 分钟</option>
-            <option value="20">20 分钟</option>
-            <option value="30" selected>30 分钟</option>
-            <option value="45">45 分钟</option>
-            <option value="60">60 分钟</option>
-            <option value="90">90 分钟</option>
-          </select>
-        </div>
-      </div>
 
-      <button id="startExamBtn" onclick="startExam()" class="btn-primary w-full" disabled>
-        <i class="fas fa-play mr-2"></i>开始考试
-      </button>
+        <button id="startExamBtn" onclick="startExam()" class="w-full py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 font-semibold text-lg disabled:opacity-50" disabled>
+          <i class="fas fa-play mr-2"></i>开始考试
+        </button>
+      </div>
     </div>
 
     <!-- Exam View -->
-    <div id="examView" class="hidden">
-      
-      <!-- Question Navigator -->
-      <div class="card mb-4">
-        <div class="flex flex-wrap gap-2" id="questionNav">
-          <!-- Filled by JS -->
-        </div>
+    <div id="examView" class="hidden pt-16">
+      <div class="glass rounded-2xl p-4 mb-6">
+        <div class="flex flex-wrap gap-2" id="questionNav"></div>
       </div>
 
-      <!-- Current Question -->
-      <div class="card mb-4">
+      <div class="glass rounded-2xl p-6 mb-6">
         <div class="flex justify-between items-start mb-4">
-          <div class="flex gap-2">
-            <span id="examQuestionType" class="text-xs px-2 py-1 rounded bg-blue-100 text-blue-800"></span>
-            <span id="examQuestionDifficulty" class="text-xs px-2 py-1 rounded"></span>
-          </div>
-          <div class="flex items-center gap-2">
-            <button onclick="markQuestion()" id="markBtn" class="text-gray-400 hover:text-orange-500">
-              <i class="far fa-flag"></i>
-            </button>
-            <span class="text-sm text-gray-400">#<span id="examQuestionNumber">1</span></span>
+          <span id="examQuestionType" class="px-3 py-1 rounded-full text-xs font-medium bg-purple-500/20 text-purple-300"></span>
+          <div class="flex items-center gap-3">
+            <button onclick="markQuestion()" id="markBtn" class="text-slate-400 hover:text-amber-400"><i class="far fa-flag"></i></button>
+            <span class="text-slate-500 text-sm">#<span id="examQuestionNumber">1</span></span>
           </div>
         </div>
         
-        <p id="examQuestionText" class="text-lg mb-6"></p>
+        <p id="examQuestionText" class="text-xl mb-6 leading-relaxed"></p>
 
-        <!-- Choice Options -->
-        <div id="examChoiceOptions" class="space-y-2 mb-4">
-          <!-- Filled by JS -->
-        </div>
-
-        <!-- Text Input -->
+        <div id="examChoiceOptions" class="space-y-3 mb-4"></div>
         <div id="examTextInput" class="hidden mb-4">
-          <input type="text" id="examAnswerInput" class="input" placeholder="输入你的答案..." onchange="saveExamAnswer()">
+          <input type="text" id="examAnswerInput" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500" placeholder="输入答案..." onchange="saveExamAnswer()">
         </div>
-
-        <!-- True/False Buttons -->
-        <div id="examTfButtons" class="hidden flex gap-4 mb-4">
-          <button onclick="selectExamTF('正确')" class="tf-btn flex-1" data-value="正确">
-            <i class="fas fa-check mr-2"></i>正确
+        <div id="examTfButtons" class="hidden grid grid-cols-2 gap-4">
+          <button onclick="selectExamTF('正确')" class="py-4 rounded-xl border border-slate-700 font-medium hover:border-emerald-500 hover:bg-emerald-500/10 transition" data-value="正确">
+            <i class="fas fa-check mr-2 text-emerald-400"></i>正确
           </button>
-          <button onclick="selectExamTF('错误')" class="tf-btn flex-1" data-value="错误">
-            <i class="fas fa-times mr-2"></i>错误
+          <button onclick="selectExamTF('错误')" class="py-4 rounded-xl border border-slate-700 font-medium hover:border-rose-500 hover:bg-rose-500/10 transition" data-value="错误">
+            <i class="fas fa-times mr-2 text-rose-400"></i>错误
           </button>
         </div>
       </div>
 
-      <!-- Navigation -->
       <div class="flex gap-4">
-        <button onclick="prevExamQuestion()" class="btn-secondary flex-1">
+        <button onclick="prevExamQuestion()" class="flex-1 py-3 rounded-xl border border-slate-700 font-medium hover:bg-slate-800 transition">
           <i class="fas fa-arrow-left mr-2"></i>上一题
         </button>
-        <button onclick="nextExamQuestion()" class="btn-primary flex-1">
+        <button onclick="nextExamQuestion()" class="flex-1 py-3 rounded-xl bg-purple-600 font-medium hover:bg-purple-700 transition">
           下一题<i class="fas fa-arrow-right ml-2"></i>
         </button>
       </div>
@@ -174,55 +138,50 @@
 
     <!-- Results View -->
     <div id="resultsView" class="hidden">
-      <div class="card text-center py-8 mb-6">
-        <div id="scoreCircle" class="w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-4">
+      <div class="glass rounded-2xl p-8 text-center mb-6">
+        <div id="scoreCircle" class="w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-6 bg-gradient-to-br from-emerald-500 to-teal-600">
           <div>
             <div id="scoreNumber" class="text-4xl font-bold"></div>
-            <div class="text-sm">分</div>
+            <div class="text-sm opacity-80">分</div>
           </div>
         </div>
         <h2 class="text-2xl font-bold mb-2">考试完成</h2>
-        <p id="scoreMessage" class="text-gray-500"></p>
+        <p id="scoreMessage" class="text-slate-400"></p>
       </div>
 
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        <div class="card text-center">
-          <div class="text-2xl font-bold text-blue-600" id="resultTotal">0</div>
-          <div class="text-sm text-gray-500">总题数</div>
+        <div class="glass rounded-xl p-4 text-center">
+          <div class="text-2xl font-bold text-indigo-400" id="resultTotal">0</div>
+          <div class="text-slate-400 text-sm">总题数</div>
         </div>
-        <div class="card text-center">
-          <div class="text-2xl font-bold text-green-600" id="resultCorrect">0</div>
-          <div class="text-sm text-gray-500">正确</div>
+        <div class="glass rounded-xl p-4 text-center">
+          <div class="text-2xl font-bold text-emerald-400" id="resultCorrect">0</div>
+          <div class="text-slate-400 text-sm">正确</div>
         </div>
-        <div class="card text-center">
-          <div class="text-2xl font-bold text-red-600" id="resultWrong">0</div>
-          <div class="text-sm text-gray-500">错误</div>
+        <div class="glass rounded-xl p-4 text-center">
+          <div class="text-2xl font-bold text-rose-400" id="resultWrong">0</div>
+          <div class="text-slate-400 text-sm">错误</div>
         </div>
-        <div class="card text-center">
-          <div class="text-2xl font-bold text-purple-600" id="resultTime">0:00</div>
-          <div class="text-sm text-gray-500">用时</div>
+        <div class="glass rounded-xl p-4 text-center">
+          <div class="text-2xl font-bold text-amber-400" id="resultTime">0:00</div>
+          <div class="text-slate-400 text-sm">用时</div>
         </div>
       </div>
 
-      <!-- Wrong Answers Review -->
-      <div class="card mb-6">
-        <h3 class="font-semibold mb-4">
-          <i class="fas fa-times-circle text-red-500 mr-2"></i>错题回顾
-        </h3>
-        <div id="wrongAnswersList" class="space-y-4">
-          <!-- Filled by JS -->
-        </div>
-        <div id="noWrongAnswers" class="hidden text-center py-4 text-gray-500">
-          <i class="fas fa-check-circle text-green-500 text-2xl mb-2"></i>
-          <p>太棒了！全部正确！</p>
+      <div class="glass rounded-2xl p-6 mb-6">
+        <h3 class="font-semibold mb-4"><i class="fas fa-times-circle text-rose-400 mr-2"></i>错题回顾</h3>
+        <div id="wrongAnswersList" class="space-y-4"></div>
+        <div id="noWrongAnswers" class="hidden text-center py-4 text-emerald-400">
+          <i class="fas fa-check-circle text-2xl mb-2"></i>
+          <p>全部正确！</p>
         </div>
       </div>
 
       <div class="flex gap-4">
-        <button onclick="resetExam()" class="btn-secondary flex-1">
+        <button onclick="resetExam()" class="flex-1 py-3 rounded-xl border border-slate-700 font-medium hover:bg-slate-800 transition">
           <i class="fas fa-redo mr-2"></i>重新考试
         </button>
-        <a href="wrong.html" class="btn-primary flex-1 inline-flex items-center justify-center">
+        <a href="wrong.html" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 font-medium text-center">
           <i class="fas fa-book mr-2"></i>查看错题本
         </a>
       </div>
@@ -240,10 +199,9 @@
     let remainingTime = 0;
     let startTime = null;
 
-    // Load bank checkboxes
     function loadExamBankCheckboxes() {
       const banks = Storage.getBanks();
-      const bankList = Object.values(banks);
+      const bankList = Object.values(banks).filter(b => b.questions && b.questions.length > 0);
       
       if (bankList.length === 0) {
         document.getElementById('examBankCheckboxes').classList.add('hidden');
@@ -252,385 +210,177 @@
       }
 
       document.getElementById('examBankCheckboxes').innerHTML = bankList.map(bank => `
-        <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:border-blue-300 transition">
-          <input type="checkbox" class="exam-bank-checkbox rounded" value="${bank.id}" onchange="updateExamStartButton()">
+        <label class="flex items-center gap-4 p-4 rounded-xl border border-slate-700 cursor-pointer hover:border-purple-500/50 transition">
+          <input type="checkbox" class="exam-bank-checkbox rounded bg-slate-800 border-slate-600 text-purple-500" value="${bank.id}" onchange="updateExamStartButton()">
           <div class="flex-1">
             <div class="font-medium">${escapeHtml(bank.name)}</div>
-            <div class="text-sm text-gray-500">${bank.questions?.length || 0} 道题</div>
+            <div class="text-sm text-slate-400">${bank.questions?.length || 0} 道题</div>
           </div>
         </label>
       `).join('');
     }
 
     function updateExamStartButton() {
-      const checked = document.querySelectorAll('.exam-bank-checkbox:checked');
-      document.getElementById('startExamBtn').disabled = checked.length === 0;
+      document.getElementById('startExamBtn').disabled = document.querySelectorAll('.exam-bank-checkbox:checked').length === 0;
     }
 
-    // Start exam
     function startExam() {
-      const checkedBanks = document.querySelectorAll('.exam-bank-checkbox:checked');
-      const bankIds = Array.from(checkedBanks).map(cb => cb.value);
-      
-      // Collect questions
+      const bankIds = Array.from(document.querySelectorAll('.exam-bank-checkbox:checked')).map(cb => cb.value);
       examQuestions = [];
-      bankIds.forEach(bankId => {
-        const bank = Storage.getBank(bankId);
-        if (bank && bank.questions) {
-          examQuestions = examQuestions.concat(bank.questions);
-        }
-      });
-
-      if (examQuestions.length === 0) {
-        alert('所选题库没有题目');
-        return;
-      }
-
-      // Shuffle
+      bankIds.forEach(id => { const bank = Storage.getBank(id); if (bank?.questions) examQuestions = examQuestions.concat(bank.questions); });
+      if (examQuestions.length === 0) { alert('所选题库没有题目'); return; }
       examQuestions = shuffleArray(examQuestions);
-
-      // Apply limit
       const limit = parseInt(document.getElementById('examQuestionCount').value);
-      if (limit > 0 && examQuestions.length > limit) {
-        examQuestions = examQuestions.slice(0, limit);
-      }
-
-      // Setup timer
-      const timeLimit = parseInt(document.getElementById('examTimeLimit').value);
-      remainingTime = timeLimit * 60;
+      if (limit > 0 && examQuestions.length > limit) examQuestions = examQuestions.slice(0, limit);
+      remainingTime = parseInt(document.getElementById('examTimeLimit').value) * 60;
       startTime = Date.now();
-
-      // Reset state
       currentExamIndex = 0;
       examAnswers = {};
       markedQuestions = new Set();
-
-      // Switch view
-      document.getElementById('examHeader').classList.add('hidden');
       document.getElementById('setupView').classList.add('hidden');
       document.getElementById('examView').classList.remove('hidden');
       document.getElementById('timerBar').classList.remove('hidden');
-
       document.getElementById('examTotalCount').textContent = examQuestions.length;
-
-      // Start timer
       updateTimerDisplay();
-      timerInterval = setInterval(() => {
-        remainingTime--;
-        updateTimerDisplay();
-        if (remainingTime <= 0) {
-          clearInterval(timerInterval);
-          alert('时间到！自动交卷');
-          submitExam();
-        }
-      }, 1000);
-
+      timerInterval = setInterval(() => { remainingTime--; updateTimerDisplay(); if (remainingTime <= 0) { clearInterval(timerInterval); submitExam(); } }, 1000);
       renderQuestionNav();
       showExamQuestion();
     }
 
-    // Update timer display
     function updateTimerDisplay() {
-      const minutes = Math.floor(remainingTime / 60);
-      const seconds = remainingTime % 60;
-      const display = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-      document.getElementById('timerDisplay').textContent = display;
-
-      // Warning colors
-      if (remainingTime <= 60) {
-        document.getElementById('timerDisplay').classList.add('text-red-600');
-        document.getElementById('timerDisplay').classList.remove('text-blue-600', 'text-orange-600');
-      } else if (remainingTime <= 300) {
-        document.getElementById('timerDisplay').classList.add('text-orange-600');
-        document.getElementById('timerDisplay').classList.remove('text-blue-600', 'text-red-600');
-      }
+      const m = Math.floor(remainingTime / 60), s = remainingTime % 60;
+      document.getElementById('timerDisplay').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+      document.getElementById('timerDisplay').className = remainingTime <= 60 ? 'text-2xl font-bold text-rose-400' : remainingTime <= 300 ? 'text-2xl font-bold text-amber-400' : 'text-2xl font-bold text-indigo-400';
     }
 
-    // Render question navigator
     function renderQuestionNav() {
       document.getElementById('questionNav').innerHTML = examQuestions.map((q, i) => {
-        let classes = 'w-8 h-8 rounded text-sm font-medium transition cursor-pointer ';
-        if (i === currentExamIndex) {
-          classes += 'bg-blue-600 text-white';
-        } else if (examAnswers[q.id]) {
-          classes += 'bg-green-100 text-green-800 hover:bg-green-200';
-        } else if (markedQuestions.has(i)) {
-          classes += 'bg-orange-100 text-orange-800 hover:bg-orange-200';
-        } else {
-          classes += 'bg-gray-100 text-gray-600 hover:bg-gray-200';
-        }
-        return `<button onclick="goToQuestion(${i})" class="${classes}">${i + 1}</button>`;
+        let cls = 'w-8 h-8 rounded text-sm font-medium transition cursor-pointer ';
+        cls += i === currentExamIndex ? 'bg-purple-600 text-white' : examAnswers[q.id] ? 'bg-emerald-500/30 text-emerald-300' : markedQuestions.has(i) ? 'bg-amber-500/30 text-amber-300' : 'bg-slate-800 text-slate-400 hover:bg-slate-700';
+        return `<button onclick="goToQuestion(${i})" class="${cls}">${i+1}</button>`;
       }).join('');
-
-      // Update answered count
-      const answeredCount = Object.keys(examAnswers).length;
-      document.getElementById('answeredCount').textContent = answeredCount;
+      document.getElementById('answeredCount').textContent = Object.keys(examAnswers).length;
     }
 
-    // Go to specific question
-    function goToQuestion(index) {
-      currentExamIndex = index;
-      showExamQuestion();
-      renderQuestionNav();
-    }
+    function goToQuestion(i) { currentExamIndex = i; showExamQuestion(); renderQuestionNav(); }
 
-    // Show exam question
     function showExamQuestion() {
       const q = examQuestions[currentExamIndex];
-
       const typeLabels = { choice: '选择题', blank: '填空题', truefalse: '判断题' };
-      const difficultyLabels = { easy: '简单', medium: '中等', hard: '困难' };
-      const difficultyColors = { easy: 'bg-green-100 text-green-800', medium: 'bg-yellow-100 text-yellow-800', hard: 'bg-red-100 text-red-800' };
-
       document.getElementById('examQuestionType').textContent = typeLabels[q.type] || '未知';
-      document.getElementById('examQuestionDifficulty').textContent = difficultyLabels[q.difficulty] || '中等';
-      document.getElementById('examQuestionDifficulty').className = `text-xs px-2 py-1 rounded ${difficultyColors[q.difficulty] || difficultyColors.medium}`;
       document.getElementById('examQuestionNumber').textContent = currentExamIndex + 1;
       document.getElementById('examQuestionText').textContent = q.question;
-
-      // Update mark button
-      const markBtn = document.getElementById('markBtn');
-      if (markedQuestions.has(currentExamIndex)) {
-        markBtn.innerHTML = '<i class="fas fa-flag text-orange-500"></i>';
-      } else {
-        markBtn.innerHTML = '<i class="far fa-flag"></i>';
-      }
-
-      // Show appropriate input
-      const choiceOptions = document.getElementById('examChoiceOptions');
-      const textInput = document.getElementById('examTextInput');
-      const tfButtons = document.getElementById('examTfButtons');
-
-      choiceOptions.classList.add('hidden');
-      textInput.classList.add('hidden');
-      tfButtons.classList.add('hidden');
-
-      const savedAnswer = examAnswers[q.id] || '';
-
+      document.getElementById('markBtn').innerHTML = markedQuestions.has(currentExamIndex) ? '<i class="fas fa-flag text-amber-400"></i>' : '<i class="far fa-flag"></i>';
+      
+      ['examChoiceOptions','examTextInput','examTfButtons'].forEach(id => document.getElementById(id).classList.add('hidden'));
+      const saved = examAnswers[q.id] || '';
+      
       if (q.type === 'choice') {
-        choiceOptions.classList.remove('hidden');
-        choiceOptions.innerHTML = q.options.map((opt, i) => {
-          const value = String.fromCharCode(65 + i);
-          const selected = savedAnswer === value ? 'selected' : '';
-          return `
-            <button onclick="selectExamOption('${value}')" 
-              class="option-btn w-full text-left ${selected}" data-value="${value}">
-              <span class="option-label">${value}</span>
-              <span>${escapeHtml(opt)}</span>
-            </button>
-          `;
+        document.getElementById('examChoiceOptions').classList.remove('hidden');
+        document.getElementById('examChoiceOptions').innerHTML = (q.options||[]).map((opt, i) => {
+          const v = String.fromCharCode(65+i), sel = saved === v;
+          return `<button onclick="selectExamOption('${v}')" class="w-full text-left p-4 rounded-xl border ${sel ? 'border-purple-500 bg-purple-500/20' : 'border-slate-700'} flex items-center gap-4 transition" data-value="${v}"><span class="w-10 h-10 rounded-lg ${sel ? 'bg-purple-500' : 'bg-slate-800'} flex items-center justify-center font-semibold">${v}</span><span class="flex-1">${escapeHtml(opt)}</span></button>`;
         }).join('');
       } else if (q.type === 'blank') {
-        textInput.classList.remove('hidden');
-        document.getElementById('examAnswerInput').value = savedAnswer;
+        document.getElementById('examTextInput').classList.remove('hidden');
+        document.getElementById('examAnswerInput').value = saved;
       } else if (q.type === 'truefalse') {
-        tfButtons.classList.remove('hidden');
-        document.querySelectorAll('.tf-btn').forEach(btn => {
-          btn.classList.toggle('selected', btn.dataset.value === savedAnswer);
+        document.getElementById('examTfButtons').classList.remove('hidden');
+        document.querySelectorAll('#examTfButtons button').forEach(btn => {
+          const sel = btn.dataset.value === saved;
+          btn.classList.toggle('border-purple-500', sel);
+          btn.classList.toggle('bg-purple-500/20', sel);
         });
       }
     }
 
-    // Select option
-    function selectExamOption(value) {
-      const q = examQuestions[currentExamIndex];
-      examAnswers[q.id] = value;
-      
-      document.querySelectorAll('.option-btn').forEach(btn => {
-        btn.classList.toggle('selected', btn.dataset.value === value);
+    function selectExamOption(v) {
+      examAnswers[examQuestions[currentExamIndex].id] = v;
+      document.querySelectorAll('#examChoiceOptions button').forEach(btn => {
+        const sel = btn.dataset.value === v;
+        btn.classList.toggle('border-purple-500', sel);
+        btn.classList.toggle('bg-purple-500/20', sel);
+        btn.querySelector('span').classList.toggle('bg-purple-500', sel);
+        btn.querySelector('span').classList.toggle('bg-slate-800', !sel);
       });
-      
       renderQuestionNav();
     }
 
-    function selectExamTF(value) {
-      const q = examQuestions[currentExamIndex];
-      examAnswers[q.id] = value;
-      
-      document.querySelectorAll('.tf-btn').forEach(btn => {
-        btn.classList.toggle('selected', btn.dataset.value === value);
+    function selectExamTF(v) {
+      examAnswers[examQuestions[currentExamIndex].id] = v;
+      document.querySelectorAll('#examTfButtons button').forEach(btn => {
+        const sel = btn.dataset.value === v;
+        btn.classList.toggle('border-purple-500', sel);
+        btn.classList.toggle('bg-purple-500/20', sel);
       });
-      
       renderQuestionNav();
     }
 
     function saveExamAnswer() {
-      const q = examQuestions[currentExamIndex];
-      const value = document.getElementById('examAnswerInput').value.trim();
-      if (value) {
-        examAnswers[q.id] = value;
-      } else {
-        delete examAnswers[q.id];
-      }
+      const v = document.getElementById('examAnswerInput').value.trim();
+      if (v) examAnswers[examQuestions[currentExamIndex].id] = v;
+      else delete examAnswers[examQuestions[currentExamIndex].id];
       renderQuestionNav();
     }
 
-    // Mark question
     function markQuestion() {
-      if (markedQuestions.has(currentExamIndex)) {
-        markedQuestions.delete(currentExamIndex);
-      } else {
-        markedQuestions.add(currentExamIndex);
-      }
+      markedQuestions.has(currentExamIndex) ? markedQuestions.delete(currentExamIndex) : markedQuestions.add(currentExamIndex);
       renderQuestionNav();
       showExamQuestion();
     }
 
-    // Navigation
-    function prevExamQuestion() {
-      if (currentExamIndex > 0) {
-        currentExamIndex--;
-        showExamQuestion();
-        renderQuestionNav();
-      }
-    }
+    function prevExamQuestion() { if (currentExamIndex > 0) { currentExamIndex--; showExamQuestion(); renderQuestionNav(); } }
+    function nextExamQuestion() { if (currentExamIndex < examQuestions.length - 1) { currentExamIndex++; showExamQuestion(); renderQuestionNav(); } }
 
-    function nextExamQuestion() {
-      if (currentExamIndex < examQuestions.length - 1) {
-        currentExamIndex++;
-        showExamQuestion();
-        renderQuestionNav();
-      }
-    }
-
-    // Submit exam
     function submitExam() {
-      const unanswered = examQuestions.length - Object.keys(examAnswers).length;
-      
-      if (unanswered > 0) {
-        if (!confirm(`还有 ${unanswered} 道题未作答，确定交卷吗？`)) {
-          return;
-        }
-      }
-
+      if (Object.keys(examAnswers).length < examQuestions.length && !confirm(`还有 ${examQuestions.length - Object.keys(examAnswers).length} 道未答，确定交卷？`)) return;
       clearInterval(timerInterval);
-      
-      // Calculate results
-      let correctCount = 0;
-      let wrongQuestions = [];
-
+      let correct = 0, wrongQs = [];
       examQuestions.forEach(q => {
-        const userAnswer = examAnswers[q.id] || '';
-        const isCorrect = userAnswer.trim().toLowerCase() === q.answer.trim().toLowerCase();
-        
-        if (isCorrect) {
-          correctCount++;
-        } else {
-          wrongQuestions.push({ question: q, userAnswer });
-          Storage.addWrongAnswer(q, userAnswer);
-        }
+        const ua = examAnswers[q.id] || '', isCorrect = ua.trim().toLowerCase() === (q.answer||'').trim().toLowerCase();
+        if (isCorrect) correct++; else { wrongQs.push({ question: q, userAnswer: ua }); Storage.addWrongAnswer(q, ua); }
       });
-
-      const score = Math.round((correctCount / examQuestions.length) * 100);
+      const score = Math.round((correct / examQuestions.length) * 100);
       const timeTaken = Math.round((Date.now() - startTime) / 1000);
-
-      // Save exam record
-      Storage.saveExamRecord({
-        questions: examQuestions.length,
-        correct: correctCount,
-        score,
-        timeTaken,
-        timestamp: Date.now()
-      });
-
-      // Show results
-      showResults(score, correctCount, examQuestions.length - correctCount, timeTaken, wrongQuestions);
+      showResults(score, correct, examQuestions.length - correct, timeTaken, wrongQs);
     }
 
-    // Show results
-    function showResults(score, correct, wrong, timeTaken, wrongQuestions) {
+    function showResults(score, correct, wrong, timeTaken, wrongQs) {
       document.getElementById('examView').classList.add('hidden');
       document.getElementById('timerBar').classList.add('hidden');
       document.getElementById('resultsView').classList.remove('hidden');
-
-      // Score circle color
-      const scoreCircle = document.getElementById('scoreCircle');
-      if (score >= 80) {
-        scoreCircle.className = 'w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-4 bg-green-100 text-green-600';
-      } else if (score >= 60) {
-        scoreCircle.className = 'w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-4 bg-yellow-100 text-yellow-600';
-      } else {
-        scoreCircle.className = 'w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-4 bg-red-100 text-red-600';
-      }
-
+      document.getElementById('scoreCircle').className = `w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-6 ${score >= 80 ? 'bg-gradient-to-br from-emerald-500 to-teal-600' : score >= 60 ? 'bg-gradient-to-br from-amber-500 to-orange-600' : 'bg-gradient-to-br from-rose-500 to-pink-600'}`;
       document.getElementById('scoreNumber').textContent = score;
-
-      // Message
-      let message = '';
-      if (score >= 90) message = '优秀！继续保持！';
-      else if (score >= 80) message = '很好！还有提升空间';
-      else if (score >= 60) message = '及格了，继续努力！';
-      else message = '需要加强练习哦';
-      document.getElementById('scoreMessage').textContent = message;
-
-      // Stats
+      document.getElementById('scoreMessage').textContent = score >= 90 ? '优秀！' : score >= 80 ? '很好！' : score >= 60 ? '及格，继续努力！' : '需要加强练习';
       document.getElementById('resultTotal').textContent = examQuestions.length;
       document.getElementById('resultCorrect').textContent = correct;
       document.getElementById('resultWrong').textContent = wrong;
+      document.getElementById('resultTime').textContent = `${Math.floor(timeTaken/60)}:${String(timeTaken%60).padStart(2,'0')}`;
       
-      const minutes = Math.floor(timeTaken / 60);
-      const seconds = timeTaken % 60;
-      document.getElementById('resultTime').textContent = `${minutes}:${String(seconds).padStart(2, '0')}`;
-
-      // Wrong answers list
-      if (wrongQuestions.length === 0) {
+      if (wrongQs.length === 0) {
         document.getElementById('wrongAnswersList').classList.add('hidden');
         document.getElementById('noWrongAnswers').classList.remove('hidden');
       } else {
         document.getElementById('wrongAnswersList').classList.remove('hidden');
         document.getElementById('noWrongAnswers').classList.add('hidden');
-
-        document.getElementById('wrongAnswersList').innerHTML = wrongQuestions.map(({ question, userAnswer }) => `
-          <div class="border border-gray-200 rounded-lg p-4">
-            <p class="font-medium mb-2">${escapeHtml(question.question)}</p>
-            ${question.options ? `
-              <div class="grid grid-cols-2 gap-1 text-sm mb-2">
-                ${question.options.map((opt, j) => `
-                  <div class="${String.fromCharCode(65 + j) === question.answer ? 'text-green-600 font-medium' : ''} ${String.fromCharCode(65 + j) === userAnswer ? 'text-red-600 line-through' : 'text-gray-600'}">
-                    ${String.fromCharCode(65 + j)}. ${escapeHtml(opt)}
-                  </div>
-                `).join('')}
-              </div>
-            ` : ''}
-            <div class="text-sm">
-              <span class="text-red-600">你的答案：${userAnswer || '未作答'}</span>
-              <span class="mx-2">|</span>
-              <span class="text-green-600">正确答案：${question.answer}</span>
-            </div>
-            ${question.explanation ? `
-              <div class="mt-2 p-2 bg-gray-50 rounded text-sm text-gray-600">
-                <strong>解析：</strong>${escapeHtml(question.explanation)}
-              </div>
-            ` : ''}
+        document.getElementById('wrongAnswersList').innerHTML = wrongQs.map(({question:q, userAnswer:ua}) => `
+          <div class="p-4 rounded-xl bg-slate-800/30 border border-slate-700/50">
+            <p class="mb-2">${escapeHtml(q.question)}</p>
+            <div class="text-sm"><span class="text-rose-400">你的答案：${ua||'未作答'}</span> · <span class="text-emerald-400">正确答案：${q.answer}</span></div>
           </div>
         `).join('');
       }
     }
 
-    // Reset exam
     function resetExam() {
       document.getElementById('resultsView').classList.add('hidden');
-      document.getElementById('examHeader').classList.remove('hidden');
       document.getElementById('setupView').classList.remove('hidden');
-      
-      examQuestions = [];
-      currentExamIndex = 0;
-      examAnswers = {};
-      markedQuestions = new Set();
-      remainingTime = 0;
+      examQuestions = []; currentExamIndex = 0; examAnswers = {}; markedQuestions = new Set();
     }
 
-    // Shuffle array
-    function shuffleArray(array) {
-      const shuffled = [...array];
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-      }
-      return shuffled;
-    }
+    function shuffleArray(arr) { const a = [...arr]; for (let i = a.length-1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; }
+    function escapeHtml(t) { if(!t)return''; const d=document.createElement('div'); d.textContent=t; return d.innerHTML; }
 
-    // Init
     loadExamBankCheckboxes();
   </script>
 </body>

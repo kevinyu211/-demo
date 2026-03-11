@@ -3,207 +3,140 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>题库管理 - 学霸助手</title>
+  <title>题库 - 学霸助手</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
+  <style>
+    *{font-family:'Inter',system-ui,sans-serif}
+    .glass{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1)}
+    .nav-blur{background:rgba(15,23,42,0.8);backdrop-filter:blur(12px)}
+  </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-slate-950 text-white min-h-screen">
   
-  <!-- Navigation -->
-  <nav class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-4">
+  <nav class="nav-blur fixed top-0 left-0 right-0 z-50 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex justify-between items-center h-16">
-        <a href="index.html" class="flex items-center space-x-2">
-          <i class="fas fa-graduation-cap text-2xl"></i>
+        <a href="index.html" class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+            <i class="fas fa-graduation-cap text-lg"></i>
+          </div>
           <span class="font-bold text-xl">学霸助手</span>
         </a>
-        <div class="hidden md:flex space-x-1">
-          <a href="index.html" class="nav-link"><i class="fas fa-home"></i> 首页</a>
-          <a href="create.html" class="nav-link"><i class="fas fa-plus-circle"></i> 创建题目</a>
-          <a href="bank.html" class="nav-link active"><i class="fas fa-database"></i> 题库</a>
-          <a href="practice.html" class="nav-link"><i class="fas fa-book-reader"></i> 刷题</a>
-          <a href="exam.html" class="nav-link"><i class="fas fa-clock"></i> 考试</a>
-          <a href="wrong.html" class="nav-link"><i class="fas fa-times-circle"></i> 错题本</a>
+        <div class="hidden md:flex items-center space-x-1">
+          <a href="index.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">首页</a>
+          <a href="practice.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">刷题</a>
+          <a href="wrong.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">错题本</a>
+          <a href="bank.html" class="px-4 py-2 rounded-lg bg-white/10 text-sm font-medium">题库</a>
         </div>
-        <button id="mobileMenuBtn" class="md:hidden p-2">
-          <i class="fas fa-bars text-xl"></i>
-        </button>
       </div>
-    </div>
-    <div id="mobileMenu" class="hidden md:hidden bg-blue-700 pb-4">
-      <a href="index.html" class="block px-4 py-2 hover:bg-blue-600">首页</a>
-      <a href="create.html" class="block px-4 py-2 hover:bg-blue-600">创建题目</a>
-      <a href="bank.html" class="block px-4 py-2 hover:bg-blue-600">题库</a>
-      <a href="practice.html" class="block px-4 py-2 hover:bg-blue-600">刷题</a>
-      <a href="exam.html" class="block px-4 py-2 hover:bg-blue-600">考试</a>
-      <a href="wrong.html" class="block px-4 py-2 hover:bg-blue-600">错题本</a>
     </div>
   </nav>
 
-  <!-- Header -->
-  <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-8 px-4">
-    <div class="max-w-6xl mx-auto flex justify-between items-center">
-      <div>
-        <h1 class="text-3xl font-bold mb-2">题库管理</h1>
-        <p class="text-blue-100">管理、导入导出你的题库</p>
-      </div>
-      <div class="flex gap-2">
-        <button onclick="showImportModal()" class="btn-secondary text-sm">
-          <i class="fas fa-upload mr-1"></i>导入
-        </button>
-        <button onclick="showNewBankModal()" class="btn-primary text-sm">
-          <i class="fas fa-plus mr-1"></i>新建题库
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <main class="max-w-6xl mx-auto px-4 py-8">
+  <main class="pt-24 pb-12 px-4 max-w-6xl mx-auto">
     
-    <!-- Bank List View -->
     <div id="bankListView">
-      <div id="bankList" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <!-- Filled by JS -->
+      <div class="flex justify-between items-center mb-8">
+        <div>
+          <h1 class="text-3xl font-bold mb-2">我的题库</h1>
+          <p class="text-slate-400">管理和组织你的学习资源</p>
+        </div>
+        <div class="flex gap-3">
+          <button onclick="showImportModal()" class="px-4 py-2 rounded-xl border border-slate-700 text-sm font-medium hover:bg-white/5 transition">
+            <i class="fas fa-upload mr-2"></i>导入
+          </button>
+          <button onclick="showNewBankModal()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-sm font-medium hover:opacity-90 transition">
+            <i class="fas fa-plus mr-2"></i>新建题库
+          </button>
+        </div>
       </div>
-      <div id="noBanks" class="hidden card text-center py-16">
-        <i class="fas fa-folder-open text-5xl text-gray-300 mb-4"></i>
-        <p class="text-gray-500 text-lg mb-4">还没有题库</p>
-        <button onclick="showNewBankModal()" class="btn-primary">
-          <i class="fas fa-plus mr-2"></i>创建第一个题库
+
+      <div id="bankList" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      
+      <div id="noBanks" class="hidden glass rounded-2xl p-12 text-center">
+        <div class="w-20 h-20 rounded-full bg-slate-800 flex items-center justify-center mx-auto mb-6">
+          <i class="fas fa-folder-open text-3xl text-slate-600"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">还没有题库</h3>
+        <p class="text-slate-400 mb-6">创建你的第一个题库</p>
+        <button onclick="showNewBankModal()" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl font-medium">
+          <i class="fas fa-plus"></i>创建题库
         </button>
       </div>
     </div>
 
-    <!-- Bank Detail View -->
     <div id="bankDetailView" class="hidden">
-      <button onclick="showBankList()" class="text-blue-600 hover:text-blue-800 mb-4">
+      <button onclick="showBankList()" class="text-slate-400 hover:text-white mb-6 transition">
         <i class="fas fa-arrow-left mr-2"></i>返回题库列表
       </button>
       
-      <div class="card mb-6">
+      <div class="glass rounded-2xl p-6 mb-6">
         <div class="flex justify-between items-start">
           <div>
-            <h2 id="bankDetailName" class="text-2xl font-bold mb-1"></h2>
-            <p id="bankDetailDesc" class="text-gray-500"></p>
+            <h2 id="bankDetailName" class="text-2xl font-bold mb-2"></h2>
+            <p id="bankDetailDesc" class="text-slate-400"></p>
           </div>
           <div class="flex gap-2">
-            <button onclick="exportCurrentBank()" class="btn-secondary text-sm">
-              <i class="fas fa-download mr-1"></i>导出
+            <button onclick="exportCurrentBank()" class="px-4 py-2 rounded-xl border border-slate-700 text-sm font-medium hover:bg-white/5 transition">
+              <i class="fas fa-download mr-2"></i>导出
             </button>
-            <a id="practiceLink" href="#" class="btn-primary text-sm">
-              <i class="fas fa-play mr-1"></i>开始练习
+            <a id="practiceLink" href="#" class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-sm font-medium hover:opacity-90 transition">
+              <i class="fas fa-play mr-2"></i>练习
             </a>
           </div>
         </div>
-        <div class="flex gap-4 mt-4 text-sm text-gray-500">
+        <div class="flex gap-4 mt-4 text-sm text-slate-400">
           <span><i class="fas fa-list mr-1"></i><span id="bankDetailCount">0</span> 道题</span>
           <span><i class="fas fa-clock mr-1"></i>创建于 <span id="bankDetailDate"></span></span>
         </div>
       </div>
 
-      <!-- Questions List -->
-      <div class="card">
+      <div class="glass rounded-2xl p-6">
         <div class="flex justify-between items-center mb-4">
           <h3 class="font-semibold">题目列表</h3>
-          <div class="flex gap-2">
-            <input type="text" id="searchQuestions" class="input py-1 text-sm w-48" placeholder="搜索题目..." oninput="filterQuestions()">
-            <select id="filterDifficulty" class="input py-1 text-sm" onchange="filterQuestions()">
-              <option value="">全部难度</option>
-              <option value="easy">简单</option>
-              <option value="medium">中等</option>
-              <option value="hard">困难</option>
-            </select>
-          </div>
+          <input type="text" id="searchQuestions" class="bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-2 text-sm w-48 focus:outline-none focus:border-purple-500" placeholder="搜索..." oninput="filterQuestions()">
         </div>
-        <div id="questionsList" class="space-y-3">
-          <!-- Filled by JS -->
-        </div>
-        <div id="noQuestions" class="hidden text-center py-8 text-gray-500">
+        <div id="questionsList" class="space-y-3"></div>
+        <div id="noQuestions" class="hidden text-center py-8 text-slate-500">
           <i class="fas fa-inbox text-3xl mb-2"></i>
           <p>题库为空</p>
-          <a href="create.html" class="text-blue-600 hover:text-blue-800 text-sm">添加题目</a>
         </div>
       </div>
     </div>
   </main>
 
   <!-- New Bank Modal -->
-  <div id="newBankModal" class="modal hidden">
-    <div class="modal-content">
+  <div id="newBankModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="glass rounded-2xl p-6 w-full max-w-md">
       <h3 class="text-lg font-semibold mb-4">创建新题库</h3>
       <div class="mb-4">
-        <label class="label">题库名称</label>
-        <input type="text" id="newBankName" class="input" placeholder="如：高中数学必修一">
+        <label class="block text-sm text-slate-400 mb-2">题库名称</label>
+        <input type="text" id="newBankName" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500" placeholder="如：高中数学必修一">
       </div>
-      <div class="mb-4">
-        <label class="label">描述 (可选)</label>
-        <input type="text" id="newBankDesc" class="input" placeholder="简短描述">
+      <div class="mb-6">
+        <label class="block text-sm text-slate-400 mb-2">描述 (可选)</label>
+        <input type="text" id="newBankDesc" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500" placeholder="简短描述">
       </div>
-      <div class="flex gap-2">
-        <button onclick="closeNewBankModal()" class="btn-secondary flex-1">取消</button>
-        <button onclick="createNewBank()" class="btn-primary flex-1">创建</button>
+      <div class="flex gap-3">
+        <button onclick="closeNewBankModal()" class="flex-1 py-3 rounded-xl border border-slate-700 font-medium hover:bg-slate-800 transition">取消</button>
+        <button onclick="createNewBank()" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 font-medium hover:opacity-90 transition">创建</button>
       </div>
     </div>
   </div>
 
   <!-- Import Modal -->
-  <div id="importModal" class="modal hidden">
-    <div class="modal-content">
+  <div id="importModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="glass rounded-2xl p-6 w-full max-w-md">
       <h3 class="text-lg font-semibold mb-4">导入题库</h3>
-      <div class="mb-4">
-        <label class="label">选择 JSON 文件</label>
-        <input type="file" id="importFile" accept=".json" class="input">
+      <div class="mb-6">
+        <label class="block text-sm text-slate-400 mb-2">选择 JSON 文件</label>
+        <input type="file" id="importFile" accept=".json" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none">
       </div>
-      <div class="flex gap-2">
-        <button onclick="closeImportModal()" class="btn-secondary flex-1">取消</button>
-        <button onclick="importBank()" class="btn-primary flex-1">导入</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Edit Question Modal -->
-  <div id="editQuestionModal" class="modal hidden">
-    <div class="modal-content max-w-2xl">
-      <h3 class="text-lg font-semibold mb-4">编辑题目</h3>
-      <div class="mb-4">
-        <label class="label">题目内容</label>
-        <textarea id="editQuestionText" class="input h-24"></textarea>
-      </div>
-      <div id="editOptionsSection" class="mb-4">
-        <label class="label">选项</label>
-        <div class="grid grid-cols-2 gap-2">
-          <input type="text" id="editOptionA" class="input" placeholder="A">
-          <input type="text" id="editOptionB" class="input" placeholder="B">
-          <input type="text" id="editOptionC" class="input" placeholder="C">
-          <input type="text" id="editOptionD" class="input" placeholder="D">
-        </div>
-      </div>
-      <div class="mb-4">
-        <label class="label">答案</label>
-        <input type="text" id="editAnswer" class="input">
-      </div>
-      <div class="mb-4">
-        <label class="label">解析</label>
-        <textarea id="editExplanation" class="input h-20"></textarea>
-      </div>
-      <div class="grid grid-cols-2 gap-4 mb-4">
-        <div>
-          <label class="label">难度</label>
-          <select id="editDifficulty" class="input">
-            <option value="easy">简单</option>
-            <option value="medium">中等</option>
-            <option value="hard">困难</option>
-          </select>
-        </div>
-        <div>
-          <label class="label">知识点</label>
-          <input type="text" id="editKnowledgePoint" class="input">
-        </div>
-      </div>
-      <div class="flex gap-2">
-        <button onclick="closeEditModal()" class="btn-secondary flex-1">取消</button>
-        <button onclick="saveEditedQuestion()" class="btn-primary flex-1">保存</button>
+      <div class="flex gap-3">
+        <button onclick="closeImportModal()" class="flex-1 py-3 rounded-xl border border-slate-700 font-medium hover:bg-slate-800 transition">取消</button>
+        <button onclick="importBank()" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 font-medium hover:opacity-90 transition">导入</button>
       </div>
     </div>
   </div>
@@ -213,13 +146,10 @@
   <script>
     let currentBankId = null;
     let currentQuestions = [];
-    let editingQuestionId = null;
 
-    // Check URL for bank ID
     const urlParams = new URLSearchParams(window.location.search);
     const bankIdParam = urlParams.get('id');
 
-    // Load bank list
     function loadBankList() {
       const banks = Storage.getBanks();
       const bankList = Object.values(banks);
@@ -234,38 +164,27 @@
       document.getElementById('noBanks').classList.add('hidden');
 
       document.getElementById('bankList').innerHTML = bankList.map(bank => `
-        <div class="card hover:shadow-lg transition cursor-pointer" onclick="showBankDetail('${bank.id}')">
+        <div class="glass rounded-2xl p-5 cursor-pointer hover:border-purple-500/50 transition" onclick="showBankDetail('${bank.id}')">
           <div class="flex justify-between items-start mb-3">
             <h3 class="font-semibold">${escapeHtml(bank.name)}</h3>
             <div class="flex gap-1">
-              <button onclick="event.stopPropagation(); renameBank('${bank.id}')" class="text-gray-400 hover:text-blue-600 p-1">
-                <i class="fas fa-edit"></i>
-              </button>
-              <button onclick="event.stopPropagation(); deleteBank('${bank.id}')" class="text-gray-400 hover:text-red-600 p-1">
-                <i class="fas fa-trash"></i>
-              </button>
+              <button onclick="event.stopPropagation(); renameBank('${bank.id}')" class="p-2 text-slate-500 hover:text-white transition"><i class="fas fa-edit"></i></button>
+              <button onclick="event.stopPropagation(); deleteBank('${bank.id}')" class="p-2 text-slate-500 hover:text-rose-400 transition"><i class="fas fa-trash"></i></button>
             </div>
           </div>
-          <p class="text-sm text-gray-500 mb-3">${bank.description || '暂无描述'}</p>
+          <p class="text-sm text-slate-400 mb-4">${bank.description || '暂无描述'}</p>
           <div class="flex justify-between items-center text-sm">
-            <span class="text-gray-500">${bank.questions?.length || 0} 道题</span>
-            <span class="text-blue-600 hover:text-blue-800">
-              查看详情 <i class="fas fa-arrow-right ml-1"></i>
-            </span>
+            <span class="text-slate-500">${bank.questions?.length || 0} 道题</span>
+            <span class="text-purple-400">查看详情 <i class="fas fa-arrow-right ml-1"></i></span>
           </div>
         </div>
       `).join('');
     }
 
-    // Show bank detail
     function showBankDetail(bankId) {
       currentBankId = bankId;
       const bank = Storage.getBank(bankId);
-      
-      if (!bank) {
-        alert('题库不存在');
-        return;
-      }
+      if (!bank) return;
 
       document.getElementById('bankListView').classList.add('hidden');
       document.getElementById('bankDetailView').classList.remove('hidden');
@@ -273,17 +192,14 @@
       document.getElementById('bankDetailName').textContent = bank.name;
       document.getElementById('bankDetailDesc').textContent = bank.description || '暂无描述';
       document.getElementById('bankDetailCount').textContent = bank.questions?.length || 0;
-      document.getElementById('bankDetailDate').textContent = new Date(bank.createdAt).toLocaleDateString();
+      document.getElementById('bankDetailDate').textContent = new Date(bank.createdAt).toLocaleDateString('zh-CN');
       document.getElementById('practiceLink').href = `practice.html?bank=${bankId}`;
 
       currentQuestions = bank.questions || [];
       renderQuestions();
-
-      // Update URL
       history.pushState(null, '', `?id=${bankId}`);
     }
 
-    // Show bank list
     function showBankList() {
       document.getElementById('bankListView').classList.remove('hidden');
       document.getElementById('bankDetailView').classList.add('hidden');
@@ -291,188 +207,84 @@
       history.pushState(null, '', 'bank.html');
     }
 
-    // Render questions
     function renderQuestions(questions = currentQuestions) {
+      const listEl = document.getElementById('questionsList');
+      const emptyEl = document.getElementById('noQuestions');
+
       if (questions.length === 0) {
-        document.getElementById('questionsList').classList.add('hidden');
-        document.getElementById('noQuestions').classList.remove('hidden');
+        listEl.classList.add('hidden');
+        emptyEl.classList.remove('hidden');
         return;
       }
 
-      document.getElementById('questionsList').classList.remove('hidden');
-      document.getElementById('noQuestions').classList.add('hidden');
+      listEl.classList.remove('hidden');
+      emptyEl.classList.add('hidden');
 
-      const difficultyLabels = { easy: '简单', medium: '中等', hard: '困难' };
-      const difficultyColors = { easy: 'bg-green-100 text-green-800', medium: 'bg-yellow-100 text-yellow-800', hard: 'bg-red-100 text-red-800' };
       const typeLabels = { choice: '选择题', blank: '填空题', truefalse: '判断题' };
+      const difficultyLabels = { easy: '简单', medium: '中等', hard: '困难' };
 
-      document.getElementById('questionsList').innerHTML = questions.map((q, i) => `
-        <div class="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition">
+      listEl.innerHTML = questions.map(q => `
+        <div class="p-4 rounded-xl bg-slate-800/30 border border-slate-700/50 hover:border-slate-600 transition">
           <div class="flex justify-between items-start mb-2">
             <div class="flex gap-2">
-              <span class="text-xs px-2 py-1 rounded ${difficultyColors[q.difficulty] || difficultyColors.medium}">${difficultyLabels[q.difficulty] || '中等'}</span>
-              <span class="text-xs px-2 py-1 rounded bg-gray-100 text-gray-600">${typeLabels[q.type] || '未知'}</span>
-              ${q.knowledgePoint ? `<span class="text-xs px-2 py-1 rounded bg-blue-50 text-blue-600">${escapeHtml(q.knowledgePoint)}</span>` : ''}
+              <span class="px-2 py-1 rounded text-xs font-medium bg-purple-500/20 text-purple-300">${typeLabels[q.type] || '未知'}</span>
+              <span class="px-2 py-1 rounded text-xs font-medium bg-slate-700 text-slate-400">${difficultyLabels[q.difficulty] || '中等'}</span>
             </div>
-            <div class="flex gap-1">
-              <button onclick="editQuestion('${q.id}')" class="text-gray-400 hover:text-blue-600 p-1">
-                <i class="fas fa-edit"></i>
-              </button>
-              <button onclick="deleteQuestion('${q.id}')" class="text-gray-400 hover:text-red-600 p-1">
-                <i class="fas fa-trash"></i>
-              </button>
-            </div>
+            <button onclick="deleteQuestion('${q.id}')" class="text-slate-500 hover:text-rose-400 transition"><i class="fas fa-trash"></i></button>
           </div>
-          <p class="text-gray-800 mb-2">${escapeHtml(q.question)}</p>
-          ${q.options ? `
-            <div class="grid grid-cols-2 gap-1 text-sm text-gray-600 mb-2">
-              ${q.options.map((opt, j) => `<div>${String.fromCharCode(65 + j)}. ${escapeHtml(opt)}</div>`).join('')}
-            </div>
-          ` : ''}
-          <div class="text-sm text-green-600">
-            <i class="fas fa-check-circle mr-1"></i>答案：${escapeHtml(q.answer)}
-          </div>
+          <p class="text-slate-200 mb-2">${escapeHtml(q.question)}</p>
+          <div class="text-sm text-emerald-400">答案：${escapeHtml(q.answer)}</div>
         </div>
       `).join('');
     }
 
-    // Filter questions
     function filterQuestions() {
       const search = document.getElementById('searchQuestions').value.toLowerCase();
-      const difficulty = document.getElementById('filterDifficulty').value;
-
-      let filtered = currentQuestions;
-
-      if (search) {
-        filtered = filtered.filter(q => 
-          q.question.toLowerCase().includes(search) ||
-          (q.knowledgePoint && q.knowledgePoint.toLowerCase().includes(search))
-        );
-      }
-
-      if (difficulty) {
-        filtered = filtered.filter(q => q.difficulty === difficulty);
-      }
-
+      const filtered = currentQuestions.filter(q => q.question.toLowerCase().includes(search));
       renderQuestions(filtered);
     }
 
-    // Modal functions
-    function showNewBankModal() {
-      document.getElementById('newBankModal').classList.remove('hidden');
-    }
-
-    function closeNewBankModal() {
-      document.getElementById('newBankModal').classList.add('hidden');
-      document.getElementById('newBankName').value = '';
-      document.getElementById('newBankDesc').value = '';
-    }
+    function showNewBankModal() { document.getElementById('newBankModal').classList.remove('hidden'); }
+    function closeNewBankModal() { document.getElementById('newBankModal').classList.add('hidden'); document.getElementById('newBankName').value = ''; document.getElementById('newBankDesc').value = ''; }
+    function showImportModal() { document.getElementById('importModal').classList.remove('hidden'); }
+    function closeImportModal() { document.getElementById('importModal').classList.add('hidden'); }
 
     function createNewBank() {
       const name = document.getElementById('newBankName').value.trim();
       const desc = document.getElementById('newBankDesc').value.trim();
-      
-      if (!name) {
-        alert('请输入题库名称');
-        return;
-      }
-
+      if (!name) { alert('请输入题库名称'); return; }
       Storage.createBank(name, desc);
       closeNewBankModal();
       loadBankList();
-      alert('题库创建成功！');
-    }
-
-    function showImportModal() {
-      document.getElementById('importModal').classList.remove('hidden');
-    }
-
-    function closeImportModal() {
-      document.getElementById('importModal').classList.add('hidden');
-      document.getElementById('importFile').value = '';
     }
 
     function importBank() {
       const file = document.getElementById('importFile').files[0];
-      if (!file) {
-        alert('请选择文件');
-        return;
-      }
-
+      if (!file) { alert('请选择文件'); return; }
       const reader = new FileReader();
       reader.onload = function(e) {
         try {
           const data = JSON.parse(e.target.result);
-          
-          // Handle different formats
           let bankName = data.name || file.name.replace('.json', '');
           let questions = data.questions || [];
-
-          // Handle QuesBank format
           if (data.选择题 || data.填空题 || data.判断题) {
             questions = [];
-            if (data.选择题) {
-              data.选择题.forEach(q => {
-                questions.push({
-                  id: generateId(),
-                  type: 'choice',
-                  question: q.question,
-                  options: q.options,
-                  answer: q.answer,
-                  explanation: q.explanation,
-                  difficulty: 'medium',
-                  source: 'import',
-                  createdAt: Date.now()
-                });
+            ['选择题', '填空题', '判断题'].forEach(type => {
+              (data[type] || []).forEach(q => {
+                questions.push({ id: generateId(), type: type === '选择题' ? 'choice' : type === '填空题' ? 'blank' : 'truefalse', ...q, source: 'import', createdAt: Date.now() });
               });
-            }
-            if (data.填空题) {
-              data.填空题.forEach(q => {
-                questions.push({
-                  id: generateId(),
-                  type: 'blank',
-                  question: q.question,
-                  answer: q.answer,
-                  explanation: q.explanation,
-                  difficulty: 'medium',
-                  source: 'import',
-                  createdAt: Date.now()
-                });
-              });
-            }
-            if (data.判断题) {
-              data.判断题.forEach(q => {
-                questions.push({
-                  id: generateId(),
-                  type: 'truefalse',
-                  question: q.question,
-                  answer: q.answer,
-                  explanation: q.explanation,
-                  difficulty: 'medium',
-                  source: 'import',
-                  createdAt: Date.now()
-                });
-              });
-            }
+            });
           }
-
           const bank = Storage.createBank(bankName, data.description || '');
-          questions.forEach(q => {
-            if (!q.id) q.id = generateId();
-            Storage.addQuestionToBank(bank.id, q);
-          });
-
+          questions.forEach(q => Storage.addQuestionToBank(bank.id, q));
           closeImportModal();
           loadBankList();
-          alert(`成功导入题库「${bankName}」，共 ${questions.length} 道题！`);
-        } catch (err) {
-          alert('导入失败：文件格式错误');
-        }
+          alert(`成功导入「${bankName}」，共 ${questions.length} 道题`);
+        } catch (err) { alert('导入失败：文件格式错误'); }
       };
       reader.readAsText(file);
     }
 
-    // Bank operations
     function renameBank(bankId) {
       const bank = Storage.getBank(bankId);
       const newName = prompt('新名称：', bank.name);
@@ -483,85 +295,21 @@
     }
 
     function deleteBank(bankId) {
-      if (confirm('确定删除此题库？此操作不可恢复。')) {
+      if (confirm('确定删除此题库？')) {
         Storage.deleteBank(bankId);
         loadBankList();
-        if (currentBankId === bankId) {
-          showBankList();
-        }
+        if (currentBankId === bankId) showBankList();
       }
     }
 
     function exportCurrentBank() {
       const bank = Storage.getBank(currentBankId);
       if (!bank) return;
-
-      const data = JSON.stringify(bank, null, 2);
-      const blob = new Blob([data], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
+      const blob = new Blob([JSON.stringify(bank, null, 2)], { type: 'application/json' });
       const a = document.createElement('a');
-      a.href = url;
+      a.href = URL.createObjectURL(blob);
       a.download = `${bank.name}.json`;
       a.click();
-    }
-
-    // Question operations
-    function editQuestion(questionId) {
-      const question = currentQuestions.find(q => q.id === questionId);
-      if (!question) return;
-
-      editingQuestionId = questionId;
-
-      document.getElementById('editQuestionText').value = question.question;
-      document.getElementById('editAnswer').value = question.answer;
-      document.getElementById('editExplanation').value = question.explanation || '';
-      document.getElementById('editDifficulty').value = question.difficulty || 'medium';
-      document.getElementById('editKnowledgePoint').value = question.knowledgePoint || '';
-
-      const optionsSection = document.getElementById('editOptionsSection');
-      if (question.type === 'choice' && question.options) {
-        optionsSection.classList.remove('hidden');
-        document.getElementById('editOptionA').value = question.options[0] || '';
-        document.getElementById('editOptionB').value = question.options[1] || '';
-        document.getElementById('editOptionC').value = question.options[2] || '';
-        document.getElementById('editOptionD').value = question.options[3] || '';
-      } else {
-        optionsSection.classList.add('hidden');
-      }
-
-      document.getElementById('editQuestionModal').classList.remove('hidden');
-    }
-
-    function closeEditModal() {
-      document.getElementById('editQuestionModal').classList.add('hidden');
-      editingQuestionId = null;
-    }
-
-    function saveEditedQuestion() {
-      if (!editingQuestionId || !currentBankId) return;
-
-      const question = currentQuestions.find(q => q.id === editingQuestionId);
-      if (!question) return;
-
-      question.question = document.getElementById('editQuestionText').value.trim();
-      question.answer = document.getElementById('editAnswer').value.trim();
-      question.explanation = document.getElementById('editExplanation').value.trim();
-      question.difficulty = document.getElementById('editDifficulty').value;
-      question.knowledgePoint = document.getElementById('editKnowledgePoint').value.trim();
-
-      if (question.type === 'choice') {
-        question.options = [
-          document.getElementById('editOptionA').value.trim(),
-          document.getElementById('editOptionB').value.trim(),
-          document.getElementById('editOptionC').value.trim(),
-          document.getElementById('editOptionD').value.trim()
-        ];
-      }
-
-      Storage.updateQuestionInBank(currentBankId, editingQuestionId, question);
-      closeEditModal();
-      renderQuestions();
-      alert('题目已更新');
     }
 
     function deleteQuestion(questionId) {
@@ -573,11 +321,11 @@
       }
     }
 
-    // Init
+    function escapeHtml(text) { if (!text) return ''; const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
+    function generateId() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 9); }
+
     loadBankList();
-    if (bankIdParam) {
-      showBankDetail(bankIdParam);
-    }
+    if (bankIdParam) showBankDetail(bankIdParam);
   </script>
 </body>
 </html>
