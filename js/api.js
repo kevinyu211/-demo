@@ -6,9 +6,9 @@
 const API = {
   // API Configuration
   config: {
-    baseUrl: 'https://api.moonshot.cn/v1',
-    model: 'moonshot-v1-8k',
-    apiKey: 'sk-qPglWWl1UJ5O8nuQz158ibBLfTsIMMlnPih04gRb7d0m7UKx',
+    baseUrl: 'https://api.moonshot.ai/v1',
+    model: 'kimi-k2.5',
+    apiKey: 'sk-knVWB5KsEUKo960WMCZ8SDBGwSb0lF85O79nTGqWKkzXegzy',
   },
 
   /**
