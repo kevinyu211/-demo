@@ -3,203 +3,193 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>刷题模式 - 学霸助手</title>
+  <title>刷题 - 学霸助手</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } }
+  </script>
+  <style>
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+    .nav-blur { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); }
+    .option-btn { transition: all 0.2s ease; }
+    .option-btn:hover:not(.correct):not(.wrong) { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.1); }
+    .option-btn.selected { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.2); }
+    .option-btn.correct { border-color: #22c55e; background: rgba(34, 197, 94, 0.2); }
+    .option-btn.wrong { border-color: #ef4444; background: rgba(239, 68, 68, 0.2); }
+  </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-slate-950 text-white min-h-screen">
   
   <!-- Navigation -->
-  <nav class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-4">
+  <nav class="nav-blur fixed top-0 left-0 right-0 z-50 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex justify-between items-center h-16">
-        <a href="index.html" class="flex items-center space-x-2">
-          <i class="fas fa-graduation-cap text-2xl"></i>
+        <a href="index.html" class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+            <i class="fas fa-graduation-cap text-lg"></i>
+          </div>
           <span class="font-bold text-xl">学霸助手</span>
         </a>
-        <div class="hidden md:flex space-x-1">
-          <a href="index.html" class="nav-link"><i class="fas fa-home"></i> 首页</a>
-          <a href="create.html" class="nav-link"><i class="fas fa-plus-circle"></i> 创建题目</a>
-          <a href="bank.html" class="nav-link"><i class="fas fa-database"></i> 题库</a>
-          <a href="practice.html" class="nav-link active"><i class="fas fa-book-reader"></i> 刷题</a>
-          <a href="exam.html" class="nav-link"><i class="fas fa-clock"></i> 考试</a>
-          <a href="wrong.html" class="nav-link"><i class="fas fa-times-circle"></i> 错题本</a>
+        <div class="hidden md:flex items-center space-x-1">
+          <a href="index.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">首页</a>
+          <a href="practice.html" class="px-4 py-2 rounded-lg bg-white/10 text-sm font-medium">刷题</a>
+          <a href="wrong.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">错题本</a>
+          <a href="bank.html" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 text-sm font-medium transition">题库</a>
         </div>
-        <button id="mobileMenuBtn" class="md:hidden p-2">
-          <i class="fas fa-bars text-xl"></i>
-        </button>
       </div>
-    </div>
-    <div id="mobileMenu" class="hidden md:hidden bg-blue-700 pb-4">
-      <a href="index.html" class="block px-4 py-2 hover:bg-blue-600">首页</a>
-      <a href="create.html" class="block px-4 py-2 hover:bg-blue-600">创建题目</a>
-      <a href="bank.html" class="block px-4 py-2 hover:bg-blue-600">题库</a>
-      <a href="practice.html" class="block px-4 py-2 hover:bg-blue-600">刷题</a>
-      <a href="exam.html" class="block px-4 py-2 hover:bg-blue-600">考试</a>
-      <a href="wrong.html" class="block px-4 py-2 hover:bg-blue-600">错题本</a>
     </div>
   </nav>
 
-  <!-- Header -->
-  <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-8 px-4">
-    <div class="max-w-4xl mx-auto">
-      <h1 class="text-3xl font-bold mb-2">刷题模式</h1>
-      <p class="text-blue-100">自由练习，查看解析，错题自动收集</p>
-    </div>
-  </header>
-
-  <main class="max-w-4xl mx-auto px-4 py-8">
+  <main class="pt-24 pb-12 px-4 max-w-3xl mx-auto">
     
-    <!-- Bank Selection -->
-    <div id="selectView" class="card">
-      <h2 class="text-lg font-semibold mb-4">选择题库</h2>
-      
-      <div id="bankCheckboxes" class="space-y-2 mb-6">
-        <!-- Filled by JS -->
+    <!-- Bank Selection View -->
+    <div id="selectView">
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold mb-2">开始刷题</h1>
+        <p class="text-slate-400">选择题库开始练习</p>
       </div>
       
-      <div id="noBanksMsg" class="hidden text-center py-8 text-gray-500">
-        <i class="fas fa-folder-open text-3xl mb-2"></i>
-        <p>还没有题库</p>
-        <a href="create.html" class="text-blue-600 hover:text-blue-800">创建题库</a>
-      </div>
-
-      <div class="flex gap-4 items-center mb-4">
-        <label class="flex items-center gap-2">
-          <input type="checkbox" id="shuffleQuestions" checked class="rounded">
-          <span class="text-sm text-gray-600">随机顺序</span>
-        </label>
-        <div class="flex items-center gap-2">
-          <label class="text-sm text-gray-600">数量限制：</label>
-          <select id="questionLimit" class="input py-1 text-sm w-24">
-            <option value="0">全部</option>
-            <option value="10">10 题</option>
-            <option value="20">20 题</option>
-            <option value="50">50 题</option>
-          </select>
+      <div class="glass rounded-2xl p-6">
+        <div id="bankCheckboxes" class="space-y-3 mb-6">
+          <!-- Filled by JS -->
         </div>
-      </div>
+        
+        <div id="noBanksMsg" class="hidden text-center py-8">
+          <i class="fas fa-folder-open text-4xl text-slate-600 mb-4"></i>
+          <p class="text-slate-400 mb-4">还没有题库</p>
+          <a href="index.html" class="text-purple-400 hover:text-purple-300">返回首页快速生成练习</a>
+        </div>
 
-      <button id="startPracticeBtn" onclick="startPractice()" class="btn-primary w-full" disabled>
-        <i class="fas fa-play mr-2"></i>开始刷题
-      </button>
+        <div class="flex items-center gap-4 mb-6 text-sm">
+          <label class="flex items-center gap-2 text-slate-300">
+            <input type="checkbox" id="shuffleQuestions" checked class="rounded bg-slate-800 border-slate-600">
+            随机顺序
+          </label>
+        </div>
+
+        <button id="startPracticeBtn" onclick="startPractice()" class="w-full py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 font-semibold text-lg hover:opacity-90 transition disabled:opacity-50" disabled>
+          <i class="fas fa-play mr-2"></i>开始刷题
+        </button>
+      </div>
     </div>
 
     <!-- Practice View -->
     <div id="practiceView" class="hidden">
       
-      <!-- Progress -->
-      <div class="card mb-4">
-        <div class="flex justify-between items-center mb-2">
-          <span class="text-sm text-gray-600">进度</span>
-          <span class="text-sm font-medium"><span id="currentIndex">1</span> / <span id="totalCount">0</span></span>
+      <!-- Progress Bar -->
+      <div class="glass rounded-2xl p-4 mb-6">
+        <div class="flex justify-between items-center mb-3">
+          <span class="text-slate-400 text-sm">进度</span>
+          <span class="font-medium"><span id="currentIndex">1</span> / <span id="totalCount">0</span></span>
         </div>
-        <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div id="progressBar" class="h-full bg-blue-600 transition-all duration-300" style="width: 0%"></div>
+        <div class="h-2 bg-slate-800 rounded-full overflow-hidden">
+          <div id="progressBar" class="h-full bg-gradient-to-r from-indigo-500 to-purple-600 transition-all duration-300" style="width: 0%"></div>
         </div>
-        <div class="flex justify-between text-xs text-gray-500 mt-2">
-          <span><i class="fas fa-check text-green-500 mr-1"></i><span id="correctCount">0</span> 正确</span>
-          <span><i class="fas fa-times text-red-500 mr-1"></i><span id="wrongCount">0</span> 错误</span>
+        <div class="flex justify-between text-sm mt-3">
+          <span class="text-emerald-400"><i class="fas fa-check mr-1"></i><span id="correctCount">0</span> 正确</span>
+          <span class="text-rose-400"><i class="fas fa-times mr-1"></i><span id="wrongCount">0</span> 错误</span>
         </div>
       </div>
 
       <!-- Question Card -->
-      <div class="card mb-4">
+      <div class="glass rounded-2xl p-6 mb-6">
         <div class="flex justify-between items-start mb-4">
           <div class="flex gap-2">
-            <span id="questionType" class="text-xs px-2 py-1 rounded bg-blue-100 text-blue-800"></span>
-            <span id="questionDifficulty" class="text-xs px-2 py-1 rounded"></span>
+            <span id="questionType" class="px-3 py-1 rounded-full text-xs font-medium bg-purple-500/20 text-purple-300"></span>
+            <span id="questionDifficulty" class="px-3 py-1 rounded-full text-xs font-medium"></span>
           </div>
-          <span class="text-sm text-gray-400">#<span id="questionNumber">1</span></span>
+          <span class="text-slate-500 text-sm">#<span id="questionNumber">1</span></span>
         </div>
         
-        <p id="questionText" class="text-lg mb-6"></p>
+        <p id="questionText" class="text-xl mb-6 leading-relaxed"></p>
 
         <!-- Choice Options -->
-        <div id="choiceOptions" class="space-y-2 mb-4">
-          <!-- Filled by JS -->
-        </div>
+        <div id="choiceOptions" class="space-y-3 mb-4"></div>
 
-        <!-- Text Input (for blank/truefalse) -->
+        <!-- Text Input -->
         <div id="textInput" class="hidden mb-4">
-          <input type="text" id="answerInput" class="input" placeholder="输入你的答案...">
+          <input type="text" id="answerInput" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 text-lg focus:outline-none focus:border-purple-500" placeholder="输入你的答案...">
         </div>
 
         <!-- True/False Buttons -->
-        <div id="tfButtons" class="hidden flex gap-4 mb-4">
-          <button onclick="selectTF('正确')" class="tf-btn flex-1" data-value="正确">
-            <i class="fas fa-check mr-2"></i>正确
+        <div id="tfButtons" class="hidden grid grid-cols-2 gap-4 mb-4">
+          <button onclick="selectTF('正确')" class="option-btn py-4 rounded-xl border border-slate-700 font-medium" data-value="正确">
+            <i class="fas fa-check mr-2 text-emerald-400"></i>正确
           </button>
-          <button onclick="selectTF('错误')" class="tf-btn flex-1" data-value="错误">
-            <i class="fas fa-times mr-2"></i>错误
+          <button onclick="selectTF('错误')" class="option-btn py-4 rounded-xl border border-slate-700 font-medium" data-value="错误">
+            <i class="fas fa-times mr-2 text-rose-400"></i>错误
           </button>
         </div>
 
-        <!-- Submit Answer -->
-        <button id="submitAnswerBtn" onclick="submitAnswer()" class="btn-primary w-full">
-          <i class="fas fa-check mr-2"></i>确认答案
+        <!-- Submit Button -->
+        <button id="submitAnswerBtn" onclick="submitAnswer()" class="w-full py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 font-semibold hover:opacity-90 transition">
+          确认答案
         </button>
 
-        <!-- Result & Explanation (shown after submit) -->
+        <!-- Result Section -->
         <div id="resultSection" class="hidden mt-6">
-          <div id="resultBanner" class="p-4 rounded-lg mb-4">
+          <div id="resultBanner" class="p-4 rounded-xl mb-4">
             <div class="flex items-center">
-              <i id="resultIcon" class="text-2xl mr-3"></i>
+              <i id="resultIcon" class="text-3xl mr-4"></i>
               <div>
-                <div id="resultText" class="font-semibold"></div>
-                <div id="correctAnswer" class="text-sm"></div>
+                <div id="resultText" class="font-semibold text-lg"></div>
+                <div id="correctAnswer" class="text-sm opacity-80"></div>
               </div>
             </div>
           </div>
-          <div id="explanationBox" class="bg-gray-50 p-4 rounded-lg">
-            <div class="text-sm text-gray-500 mb-1">解析</div>
-            <p id="explanationText" class="text-gray-700"></p>
+          <div class="bg-slate-800/50 rounded-xl p-4">
+            <div class="text-slate-400 text-sm mb-2">解析</div>
+            <p id="explanationText" class="text-slate-200"></p>
           </div>
         </div>
       </div>
 
       <!-- Navigation -->
       <div class="flex gap-4">
-        <button id="prevBtn" onclick="prevQuestion()" class="btn-secondary flex-1" disabled>
+        <button id="prevBtn" onclick="prevQuestion()" class="flex-1 py-3 rounded-xl border border-slate-700 font-medium hover:bg-slate-800 transition disabled:opacity-50" disabled>
           <i class="fas fa-arrow-left mr-2"></i>上一题
         </button>
-        <button id="nextBtn" onclick="nextQuestion()" class="btn-primary flex-1">
+        <button id="nextBtn" onclick="nextQuestion()" class="flex-1 py-3 rounded-xl bg-purple-600 font-medium hover:bg-purple-700 transition">
           下一题<i class="fas fa-arrow-right ml-2"></i>
         </button>
       </div>
     </div>
 
     <!-- Complete View -->
-    <div id="completeView" class="hidden card text-center py-12">
-      <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-        <i class="fas fa-check text-4xl text-green-600"></i>
-      </div>
-      <h2 class="text-2xl font-bold mb-2">练习完成！</h2>
-      <p class="text-gray-500 mb-6">你已完成本次刷题</p>
-      
-      <div class="grid grid-cols-3 gap-4 mb-8">
-        <div class="bg-gray-50 p-4 rounded-lg">
-          <div class="text-2xl font-bold text-blue-600" id="finalTotal">0</div>
-          <div class="text-sm text-gray-500">总题数</div>
+    <div id="completeView" class="hidden">
+      <div class="glass rounded-2xl p-8 text-center">
+        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center mx-auto mb-6">
+          <i class="fas fa-check text-4xl"></i>
         </div>
-        <div class="bg-gray-50 p-4 rounded-lg">
-          <div class="text-2xl font-bold text-green-600" id="finalCorrect">0</div>
-          <div class="text-sm text-gray-500">正确</div>
+        <h2 class="text-3xl font-bold mb-2">练习完成！</h2>
+        <p class="text-slate-400 mb-8">继续加油！</p>
+        
+        <div class="grid grid-cols-3 gap-4 mb-8">
+          <div class="bg-slate-800/50 rounded-xl p-4">
+            <div class="text-3xl font-bold text-indigo-400" id="finalTotal">0</div>
+            <div class="text-slate-400 text-sm">总题数</div>
+          </div>
+          <div class="bg-slate-800/50 rounded-xl p-4">
+            <div class="text-3xl font-bold text-emerald-400" id="finalCorrect">0</div>
+            <div class="text-slate-400 text-sm">正确</div>
+          </div>
+          <div class="bg-slate-800/50 rounded-xl p-4">
+            <div class="text-3xl font-bold text-amber-400" id="finalAccuracy">0%</div>
+            <div class="text-slate-400 text-sm">正确率</div>
+          </div>
         </div>
-        <div class="bg-gray-50 p-4 rounded-lg">
-          <div class="text-2xl font-bold text-orange-600" id="finalAccuracy">0%</div>
-          <div class="text-sm text-gray-500">正确率</div>
-        </div>
-      </div>
 
-      <div class="flex gap-4">
-        <button onclick="resetPractice()" class="btn-secondary flex-1">
-          <i class="fas fa-redo mr-2"></i>再来一次
-        </button>
-        <a href="wrong.html" class="btn-primary flex-1 inline-flex items-center justify-center">
-          <i class="fas fa-book mr-2"></i>查看错题本
-        </a>
+        <div class="flex gap-4">
+          <button onclick="resetPractice()" class="flex-1 py-3 rounded-xl border border-slate-700 font-medium hover:bg-slate-800 transition">
+            <i class="fas fa-redo mr-2"></i>再来一次
+          </button>
+          <a href="wrong.html" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 font-medium hover:opacity-90 transition text-center">
+            <i class="fas fa-book mr-2"></i>查看错题
+          </a>
+        </div>
       </div>
     </div>
   </main>
@@ -215,14 +205,13 @@
     let selectedAnswer = '';
     let answered = false;
 
-    // Check URL for pre-selected bank
     const urlParams = new URLSearchParams(window.location.search);
     const preselectedBank = urlParams.get('bank');
+    const autoStart = urlParams.get('auto') === 'true';
 
-    // Load bank checkboxes
     function loadBankCheckboxes() {
       const banks = Storage.getBanks();
-      const bankList = Object.values(banks);
+      const bankList = Object.values(banks).filter(b => b.questions && b.questions.length > 0);
       
       if (bankList.length === 0) {
         document.getElementById('bankCheckboxes').classList.add('hidden');
@@ -231,37 +220,34 @@
       }
 
       document.getElementById('bankCheckboxes').innerHTML = bankList.map(bank => `
-        <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:border-blue-300 transition">
-          <input type="checkbox" class="bank-checkbox rounded" value="${bank.id}" 
+        <label class="flex items-center gap-4 p-4 rounded-xl border border-slate-700 cursor-pointer hover:border-purple-500/50 transition ${preselectedBank === bank.id ? 'border-purple-500 bg-purple-500/10' : ''}">
+          <input type="checkbox" class="bank-checkbox rounded bg-slate-800 border-slate-600 text-purple-500" value="${bank.id}" 
             ${preselectedBank === bank.id ? 'checked' : ''}
             onchange="updateStartButton()">
           <div class="flex-1">
             <div class="font-medium">${escapeHtml(bank.name)}</div>
-            <div class="text-sm text-gray-500">${bank.questions?.length || 0} 道题</div>
+            <div class="text-sm text-slate-400">${bank.questions?.length || 0} 道题</div>
           </div>
         </label>
       `).join('');
 
       updateStartButton();
+      
+      // Auto-start if specified
+      if (autoStart && preselectedBank) {
+        setTimeout(() => startPractice(), 100);
+      }
     }
 
-    // Update start button state
     function updateStartButton() {
       const checked = document.querySelectorAll('.bank-checkbox:checked');
       document.getElementById('startPracticeBtn').disabled = checked.length === 0;
     }
 
-    // Start practice
     function startPractice() {
       const checkedBanks = document.querySelectorAll('.bank-checkbox:checked');
       const bankIds = Array.from(checkedBanks).map(cb => cb.value);
       
-      if (bankIds.length === 0) {
-        alert('请至少选择一个题库');
-        return;
-      }
-
-      // Collect questions from selected banks
       questions = [];
       bankIds.forEach(bankId => {
         const bank = Storage.getBank(bankId);
@@ -275,24 +261,15 @@
         return;
       }
 
-      // Shuffle if needed
       if (document.getElementById('shuffleQuestions').checked) {
         questions = shuffleArray(questions);
       }
 
-      // Apply limit
-      const limit = parseInt(document.getElementById('questionLimit').value);
-      if (limit > 0 && questions.length > limit) {
-        questions = questions.slice(0, limit);
-      }
-
-      // Reset state
       currentIndex = 0;
       userAnswers = {};
       correctCount = 0;
       wrongCount = 0;
 
-      // Switch view
       document.getElementById('selectView').classList.add('hidden');
       document.getElementById('practiceView').classList.remove('hidden');
       document.getElementById('totalCount').textContent = questions.length;
@@ -300,30 +277,26 @@
       showQuestion();
     }
 
-    // Show current question
     function showQuestion() {
       const q = questions[currentIndex];
       answered = false;
       selectedAnswer = '';
 
-      // Update progress
       document.getElementById('currentIndex').textContent = currentIndex + 1;
       document.getElementById('questionNumber').textContent = currentIndex + 1;
       document.getElementById('progressBar').style.width = `${((currentIndex + 1) / questions.length) * 100}%`;
       document.getElementById('correctCount').textContent = correctCount;
       document.getElementById('wrongCount').textContent = wrongCount;
 
-      // Question info
       const typeLabels = { choice: '选择题', blank: '填空题', truefalse: '判断题' };
       const difficultyLabels = { easy: '简单', medium: '中等', hard: '困难' };
-      const difficultyColors = { easy: 'bg-green-100 text-green-800', medium: 'bg-yellow-100 text-yellow-800', hard: 'bg-red-100 text-red-800' };
+      const difficultyColors = { easy: 'bg-emerald-500/20 text-emerald-300', medium: 'bg-amber-500/20 text-amber-300', hard: 'bg-rose-500/20 text-rose-300' };
 
       document.getElementById('questionType').textContent = typeLabels[q.type] || '未知';
       document.getElementById('questionDifficulty').textContent = difficultyLabels[q.difficulty] || '中等';
-      document.getElementById('questionDifficulty').className = `text-xs px-2 py-1 rounded ${difficultyColors[q.difficulty] || difficultyColors.medium}`;
+      document.getElementById('questionDifficulty').className = `px-3 py-1 rounded-full text-xs font-medium ${difficultyColors[q.difficulty] || difficultyColors.medium}`;
       document.getElementById('questionText').textContent = q.question;
 
-      // Show appropriate input
       const choiceOptions = document.getElementById('choiceOptions');
       const textInput = document.getElementById('textInput');
       const tfButtons = document.getElementById('tfButtons');
@@ -334,11 +307,11 @@
 
       if (q.type === 'choice') {
         choiceOptions.classList.remove('hidden');
-        choiceOptions.innerHTML = q.options.map((opt, i) => `
+        choiceOptions.innerHTML = (q.options || []).map((opt, i) => `
           <button onclick="selectOption('${String.fromCharCode(65 + i)}')" 
-            class="option-btn w-full text-left" data-value="${String.fromCharCode(65 + i)}">
-            <span class="option-label">${String.fromCharCode(65 + i)}</span>
-            <span>${escapeHtml(opt)}</span>
+            class="option-btn w-full text-left p-4 rounded-xl border border-slate-700 flex items-center gap-4" data-value="${String.fromCharCode(65 + i)}">
+            <span class="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center font-semibold">${String.fromCharCode(65 + i)}</span>
+            <span class="flex-1">${escapeHtml(opt)}</span>
           </button>
         `).join('');
       } else if (q.type === 'blank') {
@@ -346,24 +319,21 @@
         document.getElementById('answerInput').value = '';
       } else if (q.type === 'truefalse') {
         tfButtons.classList.remove('hidden');
-        document.querySelectorAll('.tf-btn').forEach(btn => btn.classList.remove('selected'));
+        document.querySelectorAll('#tfButtons .option-btn').forEach(btn => btn.classList.remove('selected'));
       }
 
-      // Reset UI
       document.getElementById('submitAnswerBtn').classList.remove('hidden');
       document.getElementById('resultSection').classList.add('hidden');
       document.getElementById('prevBtn').disabled = currentIndex === 0;
-      document.getElementById('nextBtn').textContent = currentIndex === questions.length - 1 ? '完成练习' : '下一题';
       document.getElementById('nextBtn').innerHTML = currentIndex === questions.length - 1 
         ? '完成练习<i class="fas fa-flag-checkered ml-2"></i>'
         : '下一题<i class="fas fa-arrow-right ml-2"></i>';
     }
 
-    // Select option
     function selectOption(value) {
       if (answered) return;
       selectedAnswer = value;
-      document.querySelectorAll('.option-btn').forEach(btn => {
+      document.querySelectorAll('#choiceOptions .option-btn').forEach(btn => {
         btn.classList.toggle('selected', btn.dataset.value === value);
       });
     }
@@ -371,12 +341,11 @@
     function selectTF(value) {
       if (answered) return;
       selectedAnswer = value;
-      document.querySelectorAll('.tf-btn').forEach(btn => {
+      document.querySelectorAll('#tfButtons .option-btn').forEach(btn => {
         btn.classList.toggle('selected', btn.dataset.value === value);
       });
     }
 
-    // Submit answer
     function submitAnswer() {
       const q = questions[currentIndex];
       
@@ -392,32 +361,19 @@
       answered = true;
       userAnswers[q.id] = selectedAnswer;
 
-      // Check if correct
-      const isCorrect = checkAnswer(selectedAnswer, q.answer);
+      const isCorrect = selectedAnswer.trim().toLowerCase() === (q.answer || '').trim().toLowerCase();
       
       if (isCorrect) {
         correctCount++;
       } else {
         wrongCount++;
-        // Add to wrong answers
         Storage.addWrongAnswer(q, selectedAnswer);
       }
 
-      // Update stats
       Storage.updateStats({ totalPracticed: 1, totalCorrect: isCorrect ? 1 : 0 });
-
-      // Show result
       showResult(isCorrect, q);
     }
 
-    // Check answer
-    function checkAnswer(userAnswer, correctAnswer) {
-      const ua = userAnswer.trim().toLowerCase();
-      const ca = correctAnswer.trim().toLowerCase();
-      return ua === ca;
-    }
-
-    // Show result
     function showResult(isCorrect, question) {
       document.getElementById('submitAnswerBtn').classList.add('hidden');
       document.getElementById('resultSection').classList.remove('hidden');
@@ -427,21 +383,20 @@
       const resultText = document.getElementById('resultText');
 
       if (isCorrect) {
-        resultBanner.className = 'p-4 rounded-lg mb-4 bg-green-50 text-green-800';
-        resultIcon.className = 'fas fa-check-circle text-2xl mr-3 text-green-500';
+        resultBanner.className = 'p-4 rounded-xl mb-4 bg-emerald-500/20 text-emerald-300';
+        resultIcon.className = 'fas fa-check-circle text-3xl mr-4';
         resultText.textContent = '回答正确！';
       } else {
-        resultBanner.className = 'p-4 rounded-lg mb-4 bg-red-50 text-red-800';
-        resultIcon.className = 'fas fa-times-circle text-2xl mr-3 text-red-500';
+        resultBanner.className = 'p-4 rounded-xl mb-4 bg-rose-500/20 text-rose-300';
+        resultIcon.className = 'fas fa-times-circle text-3xl mr-4';
         resultText.textContent = '回答错误';
       }
 
       document.getElementById('correctAnswer').textContent = `正确答案：${question.answer}`;
       document.getElementById('explanationText').textContent = question.explanation || '暂无解析';
 
-      // Highlight correct/wrong options
       if (question.type === 'choice') {
-        document.querySelectorAll('.option-btn').forEach(btn => {
+        document.querySelectorAll('#choiceOptions .option-btn').forEach(btn => {
           if (btn.dataset.value === question.answer) {
             btn.classList.add('correct');
           } else if (btn.dataset.value === selectedAnswer && !isCorrect) {
@@ -450,12 +405,10 @@
         });
       }
 
-      // Update counts
       document.getElementById('correctCount').textContent = correctCount;
       document.getElementById('wrongCount').textContent = wrongCount;
     }
 
-    // Navigation
     function prevQuestion() {
       if (currentIndex > 0) {
         currentIndex--;
@@ -472,7 +425,6 @@
       }
     }
 
-    // Show completion
     function showComplete() {
       document.getElementById('practiceView').classList.add('hidden');
       document.getElementById('completeView').classList.remove('hidden');
@@ -482,7 +434,6 @@
       document.getElementById('finalAccuracy').textContent = Math.round((correctCount / questions.length) * 100) + '%';
     }
 
-    // Reset
     function resetPractice() {
       document.getElementById('completeView').classList.add('hidden');
       document.getElementById('selectView').classList.remove('hidden');
@@ -493,7 +444,6 @@
       wrongCount = 0;
     }
 
-    // Shuffle array
     function shuffleArray(array) {
       const shuffled = [...array];
       for (let i = shuffled.length - 1; i > 0; i--) {
@@ -503,18 +453,14 @@
       return shuffled;
     }
 
-    // Init
-    loadBankCheckboxes();
-    
-    // Auto-start if bank is preselected
-    if (preselectedBank) {
-      setTimeout(() => {
-        const checkbox = document.querySelector(`.bank-checkbox[value="${preselectedBank}"]`);
-        if (checkbox && checkbox.checked) {
-          startPractice();
-        }
-      }, 100);
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
     }
+
+    loadBankCheckboxes();
   </script>
 </body>
 </html>
